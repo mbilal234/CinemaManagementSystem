@@ -1,42 +1,48 @@
-h1{
-    font-family:Georgia, 'Times New Roman', Times, serif;
-    font-size: 30px;
-    text-align: center;
-    padding-top: 20px;
-    padding-bottom: 10px;
-    color: darkblue;
-}
-h2{
-    font-family:Georgia, 'Times New Roman', Times, serif;
-    font-size: 20px;
-    color: blue;
-}
 img{
-    max-width: 30%;
-    margin-left:150px;
+    display:block;
+    margin: auto;
 }
 
-div{
-    padding-top : 10px;
-    padding-bottom: 10px;
-    font-family:Georgia, 'Times New Roman', Times, serif
+h1{
+    text-align: center;
+    color: blue;
+    font-size: 40px;
 }
-div:hover{
-    font-style: italic;
-    color: black;
-    font-size: 20px;
-    font-weight: 1000;
+
+h2{
+    text-align: center;
+    font-size: 30px;
+    color: blue;
 }
-label {
-    display: block;
-    
-    width: 50px;
-    line-height: 26px;
-    margin-bottom: 10px;
-  }
-  
-  input {
+
+form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+label{
+    font-size: 25px;
+    font-weight: 700;
+    margin-top: 12px;
+    color: blue;
+}
+
+input{
+    width: 320px;
     height: 20px;
-    flex: 0 0 200px;
-    margin-left: 45px;
-  }
+}
+
+button{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 20px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+button:hover{
+    transform: scale(1.1);
+    transition-duration: 0.25s;
+}
