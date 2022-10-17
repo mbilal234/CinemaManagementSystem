@@ -1,0 +1,75 @@
+:root {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    --bg-primary: white;
+    --bg-secondary: rgb(17, 12, 42);
+    --text-primary: black;
+    --text-secondary: white;
+}
+
+body {
+    background-color: var(--bg-primary);
+}
+
+.nav-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    min-width: 100vw;
+    min-height: 15vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    background-color: var(--bg-secondary);
+}
+
+.logo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    text-decoration: none;
+    align-items: center;
+    min-width: 375px;
+}
+
+.logo-img {
+    height: 150px;
+    min-width: 150px;
+}
+
+.logo-text {
+    display: inline-flex;
+    font-family: 'Pacifico', cursive;
+    font-size: 10vh;
+    color: rgb(185, 89, 248);
+}
+
+.navbar-ul {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: auto;
+    justify-content: flex-end;
+}
+
+.nav-link {
+    display: flex;
+    flex-direction: row;
+    text-decoration: none;
+    align-items: center;
+}
+
+ul {
+    width: 35vw;
+    display: flex;
+    justify-content: space-around;
+}
+
+.navbar-items {
+    min-width: 15vw;
+}
+
+.link-text {
+    font-size: 25px;
+}
