@@ -1,2 +1,6 @@
+<<<<<<< HEAD
+.env
+=======
 dotenv
+>>>>>>> 5768094e9e82e3dbb55c168c530ebcf0c0565d43
 node_modules
