@@ -1,3 +1,7 @@
+DROP SCHEMA IF EXISTS Cinema;
+CREATE SCHEMA Cinema;
+USE Cinema;
+
 CREATE TABLE `Theatre`(
     `Theatre_ID` INT UNSIGNED NOT NULL,
     `Name` VARCHAR(255) NOT NULL,
@@ -19,8 +23,6 @@ CREATE TABLE `Film_Time`(
     `Film_ID` INT NOT NULL,
 	FOREIGN KEY (Film_ID) REFERENCES Film(Film_ID));
     
-ALTER TABLE
-    `Film_Time` ADD PRIMARY KEY `Film_Time`(`Time`);
 CREATE TABLE `Employee`(
     `EmpID` INT UNSIGNED NOT NULL,
     `Name` VARCHAR(255) NOT NULL,
@@ -34,17 +36,14 @@ CREATE TABLE `Seats`(
     `Available` TINYINT(1) NOT NULL,
     `Theatre_ID` INT UNSIGNED NOT NULL,
 	FOREIGN KEY (Theatre_ID) REFERENCES Theatre(Theatre_ID));
-    
-ALTER TABLE
-    `Seats` ADD PRIMARY KEY `seats_seatnumber_primary`(`SeatNumber`);
+
 CREATE TABLE `Customer`(
     `CustomerID` INT UNSIGNED NOT NULL,
     `Name` VARCHAR(255) NOT NULL,
     `NumSeats` INT NOT NULL,
     `Film_ID` INT NOT NULL,
     `SeatNumber` INT UNSIGNED NOT NULL,
-    `Member` TINYINT(1) NOT NULL,
-	FOREIGN KEY (SeatNumber) REFERENCES Seats(SeatNumber));
+    `Member` TINYINT(1) NOT NULL);
 
 ALTER TABLE
     `Customer` ADD PRIMARY KEY `customer_customerid_primary`(`CustomerID`);
