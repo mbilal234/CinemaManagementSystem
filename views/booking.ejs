@@ -1,0 +1,110 @@
+<link rel="stylesheet" href="./CSS/Style.css">
+<div>
+    <img class="main-logo" src="./images/CinemaLogo.jpg"/>
+  </div>
+
+   
+  <div class="movie-container">
+    <label style="font-size: 1em;">Pick a movie:</label>
+    <select id="movie">
+      <option value="10">Jurassic Park (Rs. 750)</option>
+      <option value="12">Logan (Rs. 800)</option>
+      <option value="8">Avengers Infinity War (Rs. 900)</option>
+    </select>
+  </div>
+
+  <ul class="showcase">
+    <li>
+      <div id="seat" class="seat"></div>
+      <small class="status" style="font-size: 1em;">N/A</small>
+    </li>
+    <li>
+      <div id="seat" class="seat selected"></div>
+      <small class="status" style="font-size: 1em;">Selected</small>
+    </li>
+    <li>
+      <div id="seat" class="seat occupied"></div>
+      <small class="status" style="font-size: 1em;">Occupied</small>
+    </li>
+  </ul>
+
+  <div class="container">
+    <div class="screen"></div>
+
+    <div class="row">
+      <div id="seat1" class="seat"></div>
+      <div id="seat2" class="seat"></div>
+      <div id="seat3" class="seat"></div>
+      <div id="seat4" class="seat"></div>
+      <div id="seat5" class="seat"></div>
+      <div id="seat6" class="seat"></div>
+      <div id="seat7" class="seat"></div>
+      <div id="seat8" class="seat"></div>
+    </div>
+    <div class="row">
+      <div id="seat9" class="seat"></div>
+      <div id="seat10" class="seat"></div>
+      <div id="seat11" class="seat"></div>
+      <div id="seat12" class="seat occupied"></div>
+      <div id="seat13" class="seat occupied"></div>
+      <div id="seat14" class="seat"></div>
+      <div id="seat15" class="seat"></div>
+      <div id="seat16" class="seat"></div>
+    </div>
+    <div class="row">
+      <div id="seat17" class="seat"></div>
+      <div id="seat18" class="seat"></div>
+      <div id="seat19" class="seat"></div>
+      <div id="seat20" class="seat"></div>
+      <div id="seat21" class="seat"></div>
+      <div id="seat22" class="seat"></div>
+      <div id="seat23" class="seat occupied"></div>
+      <div id="seat24" class="seat occupied"></div>
+    </div>
+    <div class="row">
+      <div id="seat25" class="seat"></div>
+      <div id="seat26" class="seat"></div>
+      <div id="seat27" class="seat"></div>
+      <div id="seat28" class="seat"></div>
+      <div id="seat29" class="seat"></div>
+      <div id="seat30" class="seat"></div>
+      <div id="seat31" class="seat"></div>
+      <div id="seat32" class="seat"></div>
+    </div>
+    <div class="row">
+      <div id="seat33" class="seat"></div>
+      <div id="seat34" class="seat"></div>
+      <div id="seat35" class="seat"></div>
+      <div id="seat36" class="seat occupied"></div>
+      <div id="seat37" class="seat occupied"></div>
+      <div id="seat38" class="seat"></div>
+      <div id="seat39" class="seat"></div>
+      <div id="seat40" class="seat"></div>
+    </div>
+    <div class="row">
+      <div id="seat" class="seat"></div>
+      <div id="seat" class="seat"></div>
+      <div id="seat" class="seat"></div>
+      <div id="seat" class="seat"></div>
+      <div id="seat" class="seat occupied"></div>
+      <div id="seat" class="seat occupied"></div>
+      <div id="seat" class="seat occupied"></div>
+      <div id="seat" class="seat"></div>
+    </div>
+  </div>
+
+  <p class="text" style="font-size: 1em;margin:0px 0px 15px 0px">
+    You have selected <span id="count">0</span> seats for a price of $<span
+      id="total"
+      >0</span
+    
+  </p>
+
+  <form action="/">
+    <button class="btn-home" action="/">
+      Home
+    </button>
+  </form>
+  
+
+  <script src="JS/scripts.js"></script>

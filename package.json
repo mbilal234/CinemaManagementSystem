@@ -1,0 +1,27 @@
+{
+  "name": "cinematicketingsystem",
+  "version": "1.0.0",
+  "description": "An application that provides an Admin Interface to issue tickets for a Movie Theatre according to availability of seats.",
+  "main": "index.js",
+  "scripts": {
+    "devStart": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mbilal234/CinemaTicketingSystem.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mbilal234/CinemaTicketingSystem/issues"
+  },
+  "homepage": "https://github.com/mbilal234/CinemaTicketingSystem#readme",
+  "dependencies": {
+    "ejs": "^3.1.8",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.3",
+    "nodemon": "^2.0.20"
+  }
+}

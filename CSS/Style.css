@@ -147,3 +147,7 @@
     .btn-home:active{
         border: 0px solid #E50914;
     }
+
+    label{
+      color: white;
+    }
