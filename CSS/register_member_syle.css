@@ -1,0 +1,75 @@
+body{
+    background-color: black;
+    color: white;
+}
+h1{
+    text-align: center;
+    font-size: 50px;
+    margin-bottom: 30px;
+}
+
+form{
+    /* background-color: "#002D62"; */
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    margin: auto;
+    margin-bottom: 20px;
+    border: 3px solid red;
+    border-radius: 6px;
+}
+
+.formDiv{
+    display: flex;
+}
+
+label{
+    margin: 5px;
+    margin-top: 11px;
+}
+
+input{
+    background-color: black;
+    color: white;
+    width: 200px;
+    margin: 5px;
+    height: 30px;
+    border: 1px solid white;
+}
+
+.labels{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-right:10px;
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.inputs{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-right: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.infoPiece{
+    display: flex;
+}
+
+.btn{
+    margin: auto;
+    width: 150px;
+    margin-bottom: 20px;
+}
+
+u{
+    font-size: 25px;
+    margin: 10px;
+}
+
+p{
+    margin-left: 10px;
+    margin-top: 5px;
+}
