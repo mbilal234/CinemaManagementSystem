@@ -7,6 +7,7 @@ CREATE TABLE `Films`(
     `Title` VARCHAR(255) NOT NULL,
     `Genres` VARCHAR(30), 
     `Description` VARCHAR(255) NOT NULL,
+    `Trailer_Link` VARCHAR(255),
     `Run_Time` INT UNSIGNED,
     `Rating` FLOAT UNSIGNED,
     `Cover_Img` BLOB,
@@ -31,11 +32,47 @@ CREATE TABLE `ShowTimes`(
     FOREIGN KEY (Screen_ID) REFERENCES Screens(Screen_ID)
 );
 
+CREATE TABLE `Suppliers`(
+	`Sup_ID` INT UNSIGNED PRIMARY KEY,
+    `Name` VARCHAR(30) NOT NULL,
+    `City` VARCHAR(30) NOT NULL
+);
+
+CREATE TABLE `Meal_Inventory`(
+	`Meal_ID` INT UNSIGNED PRIMARY KEY,
+    `Name` VARCHAR(45) NOT NULL,
+    `Cost` FLOAT NOT NULL,
+    `Sale_Price` FLOAT NOT NULL,
+    `Sup_ID` INT UNSIGNED,
+    FOREIGN KEY (Sup_ID) REFERENCES Suppliers(Sup_ID)
+);
+
 CREATE TABLE `Reservations`(
 	`Res_ID` INT UNSIGNED PRIMARY KEY,
+    `Res_Time` DATETIME DEFAULT CURRENT_TIMESTAMP,
     `Show_ID` INT UNSIGNED,
-    `Seats` VARCHAR(25),
+    `Glasses` INT UNSIGNED DEFAULT 0,
     FOREIGN KEY (Show_ID) REFERENCES ShowTimes(Show_ID) 
+);
+
+CREATE TABLE `Orders`(
+	`Order_ID` INT UNSIGNED PRIMARY KEY,
+	`Res_ID` INT UNSIGNED,
+    FOREIGN KEY (Res_ID) REFERENCES Reservations(Res_ID)
+);
+
+CREATE TABLE `Order_Details`(
+	`Order_ID` INT UNSIGNED,
+    `Meal_ID` INT UNSIGNED,
+    `Quantity` INT UNSIGNED,
+    FOREIGN KEY (Order_ID) REFERENCES Orders(Order_ID),
+    FOREIGN KEY (Meal_ID) REFERENCES Meal_Inventory(Meal_ID)
+);
+
+CREATE TABLE `Res_Seats`(
+	`Res_ID` INT UNSIGNED,
+    `SeatNum` VARCHAR(3),
+    FOREIGN KEY (Res_ID) REFERENCES Reservations(Res_ID)
 );
 
 CREATE TABLE `Members`(
@@ -69,6 +106,10 @@ CREATE TABLE `Employee`(
     `HireDate` DATE NOT NULL
 );
 
--- CREATE OR REPLACE VIEW `Reserved_Seats` 
--- AS (SELECT );
-
+CREATE OR REPLACE VIEW `VU_Reserved_Seats` AS
+SELECT f.Title, st.Show_Date, st.Start_Time, st.Show_Type, sc.Screen_Name, rs.SeatNum 
+FROM Films f
+JOIN ShowTimes st USING (Film_ID)
+JOIN Screens sc USING (Screen_ID)
+JOIN Reservations res USING (Show_ID) 
+JOIN Res_Seats rs USING (Res_ID);
