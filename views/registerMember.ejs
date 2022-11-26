@@ -102,12 +102,18 @@
 	</div>
 </div>
 
-<form action="/">
+<script>
+  function myFunction() {
+    document.getElementById("check").style.color = "black";
+  }
+  </script>
+<form>
     <div class="formDiv">
         <div class="labels">
             <label for="firstName">First Name</label>
             <label for="lastName">Last Name</label>
-            <label for="cnic">Date Of Birth</label>
+            <label for="cnic">CNIC</label>
+            <label for="DOB">Date of Birth</label>
             <label for="cell#">Phone Number</label>
             <label for="profession">Profession</label>
             <label for="reference">Reference</label>
@@ -123,24 +129,25 @@
             <label for="pinCode">Pin Code</label>
         </div>
         <div class="inputs">
-            <input type="text" name="firstName" id="firstName1">
-            <input type="text" name="lastName" id="lastName1">
-            <input type="text" name="cnic" id="cnic1">
-            <input type="text" name="cell#" id="cell#1">
-            <input type="text" name="profession" id="profession1">
-            <input type="text" name="reference" id="reference1">
-            <input type="text" name="residencePhone" id="residencePhone1">
-            <input type="text" name="officePhone" id="officePhone1">
-            <input type="text" name="email" id="email1">
-            <input type="text" name="gender" id="gender1">
-            <input type="text" name="address" id="address1">
-            <input type="text" name="movieGenre" id="movieGenre1">
-            <input type="text" name="movieType" id="movieType1">
-            <input type="text" name="userName" id="userName1">
-            <input type="text" name="password" id="password1">
-            <input type="text" name="pinCode" id="pinCode1">
+            <input type="text" name="firstName" required = "required" id="firstName1">
+            <input type="text" name="lastName"  required = "required" id="lastName1">
+            <input type="number" pattern = "\d{13,13}" name="cnic"  required = "required" id="cnic1">
+            <input type="date"  name="DOB"  required = "required" id="cnic1">
+            <input type="number" name="cell#" required = "required" id="cell#1">
+            <input type="text" name="profession" required = "required" id="profession1">
+            <input type="text" name="reference" required = "required" id="reference1">
+            <input type="number" name="residencePhone" required = "required" id="residencePhone1">
+            <input type="number" name="officePhone" required = "required" id="officePhone1">
+            <input type="email" name="email"  required = "required" id="email1">
+            <input type="text" name="gender" required = "required" id="gender1">
+            <input type="text" name="address"  required = "required" id="address1">
+            <input type="text" name="movieGenre" required = "required" id="movieGenre1">
+            <input type="text" name="movieType" required = "required" id="movieType1">
+            <input type="text" name="userName" required = "required" id="userName1">
+            <input type="password" name="password" required = "required" id="password1">
+            <input type="number" name="pinCode" required = "required" id="pinCode1">
         </div>
     </div>
-    <button class="btn btn-danger">Register</button>
+    <button id = "check" class="btn btn-danger" onclick = "myFunction()">Register</button>
 </form>
 
