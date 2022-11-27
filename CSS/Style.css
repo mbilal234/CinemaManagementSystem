@@ -23,6 +23,8 @@
 
       .movie-container {
         margin: 20px 0;
+        display: flex;
+        justify-content: space-between;
       }
 
       .movie-container select {
@@ -150,4 +152,19 @@
 
     label{
       color: white;
+    }
+
+    #seeMoreButton{
+      background-color: red;
+      color: white;
+      height: 40px;
+      width: 100px;
+      margin-left: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #seeMoreButton:hover{
+      transform: scale(1.1);
+      transition-duration: 0.5s;
     }

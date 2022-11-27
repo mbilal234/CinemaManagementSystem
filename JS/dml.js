@@ -9,7 +9,8 @@ var con = mysql.createConnection({
 });
 
 function insertCustomer(first_name, last_name){
-    con.query(`insert into students values (${first_name}, ${last_name}, 4)`, (err, result, fields) => {
+    var values = [[first_name, last_name, 4]]
+    con.query(`insert into students (first_name, last_name, cgpa) values (?)`, values, (err, result) => {
         if (err) {
             console.log(err)
         }
