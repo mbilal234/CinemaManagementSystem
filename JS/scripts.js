@@ -4,7 +4,7 @@ var count=0;
       var item=seats[i];
       
       item.addEventListener("click",(event)=>{
-        var price= document.getElementById("movie").value;
+        var price= 10;
 
         if (!event.target.classList.contains('occupied') && !event.target.classList.contains('selected') ){
         count++;

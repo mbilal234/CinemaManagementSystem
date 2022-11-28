@@ -33,7 +33,7 @@ async function openSeeMore(film_id, res) {
 
 function insertFilm(film_id, title, genre, desc_, run_time, rating, cover_img, start_date, end_date) {
     film_id = parseInt(film_id);
-    run_time = parseInt(film_id);
+    run_time = parseInt(run_time);
     var values = [[film_id, title, genre, desc_, run_time, rating, cover_img, start_date, end_date]];
     fetch("http://localhost:3000/images/"+cover_img).then((res)=>{
         return res.blob;
