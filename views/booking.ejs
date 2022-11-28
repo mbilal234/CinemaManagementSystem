@@ -7,9 +7,12 @@
   <form action="/seeMore" method="post" class="movie-container">
     <label style="font-size: 1em;">Pick a movie:</label>
     <select id="movie" name="someName">
-      <option value="1223" name="jurassic164">Jurassic Park (Rs. 750)</option>
+      <% while (iterator > 0) {%>
+      <option value="<%=result[iterator-1].film_id%>" name="<%=result[iterator-1].title%>"><%=result[iterator-1].title%></option>
+      <% iterator -= 1 } %>
+      <!-- <option value="1223" name="jurassic164">Jurassic Park (Rs. 750)</option>
       <option value="logan164" name="logan164">Logan (Rs. 800)</option>
-      <option value="avengers164" name="avengers164">Avengers Infinity War (Rs. 900)</option>
+      <option value="avengers164" name="avengers164">Avengers Infinity War (Rs. 900)</option> -->
     </select>
     <button id="seeMoreButton">See More</button>
   </form>
