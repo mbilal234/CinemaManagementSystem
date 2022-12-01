@@ -100,7 +100,7 @@ CREATE TABLE `Member_Payment`(
 	`Member_ID` INT UNSIGNED,
     `Due_Date` DATE NOT NULL,
     `isPayed` BOOL DEFAULT FALSE,
-    FOREIGN KEY (Mmeber_ID) REFERENCES Members(Member_ID)
+    FOREIGN KEY (Member_ID) REFERENCES Members(Member_ID)
 );
 
 CREATE TABLE `NonMember_Reservation`(
