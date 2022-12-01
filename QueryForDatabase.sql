@@ -79,10 +79,12 @@ CREATE TABLE `Members`(
 	`Member_ID` INT UNSIGNED PRIMARY KEY,
     `fName` VARCHAR(30) NOT NULL,
     `lName` VARCHAR(30),
+    `CNIC` INT(13) UNSIGNED NOT NULL,
     `Email` VARCHAR(40) NOT NULL,
     `Phone` INT(11) UNSIGNED NOT NULL,
-    `CNIC` INT(13) UNSIGNED NOT NULL,
-    `Password` VARCHAR(40) NOT NULL
+    `Password` VARCHAR(40) NOT NULL,
+    `Joining_Date` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `isAuthenticated` BOOL DEFAULT FALSE
     -- `Card_Number` INT UNSIGNED,
     -- `Card_Expiry` DATE
 );
@@ -91,6 +93,21 @@ CREATE TABLE `Member_Reservation`(
 	`Member_ID` INT UNSIGNED,
     `Res_ID` INT UNSIGNED,
     FOREIGN KEY (Member_ID) REFERENCES Members(Member_ID),
+    FOREIGN KEY (Res_ID) REFERENCES Reservations(Res_ID)
+);
+
+CREATE TABLE `Member_Payment`(
+	`Member_ID` INT UNSIGNED,
+    `Due_Date` DATE NOT NULL,
+    `isPayed` BOOL DEFAULT FALSE,
+    FOREIGN KEY (Mmeber_ID) REFERENCES Members(Member_ID)
+);
+
+CREATE TABLE `NonMember_Reservation`(
+	`Res_ID` INT UNSIGNED,
+    `fname` VARCHAR(30) NOT NULL,
+    `lname` VARCHAR(30),
+    `CNIC` INT(13) UNSIGNED NOT NULL,
     FOREIGN KEY (Res_ID) REFERENCES Reservations(Res_ID)
 );
     
@@ -103,7 +120,7 @@ CREATE TABLE `Employee`(
     `CNIC` INT(13) UNSIGNED NOT NULL,
     `Password` VARCHAR(40) NOT NULL,
     `JobTitle` VARCHAR(30) NOT NULL,
-    `HireDate` DATE NOT NULL
+    `HireDate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE OR REPLACE VIEW `VU_Reserved_Seats` AS
