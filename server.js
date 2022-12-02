@@ -3,6 +3,12 @@ const fetch = require("node-fetch");
 const app = express();
 const path = require("path");
 const bodyParser = require('body-parser');
+const mailVerification = require("./JS/emailVerify.js");
+
+// Variables Required for email verification
+let verificationCode;
+let userEmail;
+let response;
 
 app.set("view-engine", "ejs");
 
@@ -78,6 +84,11 @@ function getOptions(res) {
     
 }
 
+async function userVerification(receiver, res, in_correct){
+    verificationCode = await mailVerification(receiver);
+    res.render("enterCode.ejs", {email: receiver, incorrect: in_correct});
+}
+
 app.get("/", (req, res) => {
     res.render("index.ejs");
 })
@@ -106,6 +117,27 @@ app.get("/insert", (req, res) => {
 app.post("/filmInsert", (req, res) => {
     insertFilm(req.body.filmId, req.body.filmName, req.body.genre, req.body.desc, req.body.runTime, req.body.rating, req.body.imgUrl, req.body.startDate, req.body.endDate);
     res.redirect("/");
+})
+
+app.post("/verify", (req, res) => {
+    userEmail = req.body.email;
+    response = res;
+    userVerification(userEmail, response, "");
+})
+
+app.post("/codeEntered", (req, res) => {
+    console.log("No error Yet 1");
+    console.log(verificationCode);
+    // let ver = verificationCode.toString();
+    console.log("No error Yet 2");
+    let codeEntered = parseInt(req.body.digit_1+req.body.digit_2+req.body.digit_3+req.body.digit_4+req.body.digit_5+req.body.digit_6);
+    console.log("No error Yet 3");
+    console.log(codeEntered);
+    let verified = codeEntered===verificationCode?true:false;
+    console.log(verified);
+    res.render("verificationSuccess.ejs", {verificationStatus: verified?"Your Account Is Made!":"Incorrect Code Entered", action:verified?"/":"/registerMemberPage", buttonText: verified?"Done":"Register Again"});
+    // res.render("verificationSuccess.ejs");
+    
 })
 
 app.listen(3000, () => {
