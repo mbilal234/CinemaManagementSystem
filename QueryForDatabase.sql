@@ -18,7 +18,7 @@ CREATE TABLE `Films`(
 
 CREATE TABLE `Screens`(
 	`Screen_ID` INT UNSIGNED PRIMARY KEY,
-	`Screen_Name` VARCHAR(15)
+	`Screen_Name` VARCHAR(15) NOT NULL
 );
 
 CREATE TABLE `ShowTimes`(
@@ -29,7 +29,8 @@ CREATE TABLE `ShowTimes`(
     `Start_Time` TIME NOT NULL,
     `Show_Type` VARCHAR(2) NOT NULL,
     FOREIGN KEY (Film_ID) REFERENCES Films(Film_ID),
-    FOREIGN KEY (Screen_ID) REFERENCES Screens(Screen_ID)
+    FOREIGN KEY (Screen_ID) REFERENCES Screens(Screen_ID),
+    FOREIGN KEY (Show_Type) REFERENCES Show_Price(Show_Type)
 );
 
 CREATE TABLE `Suppliers`(
@@ -79,14 +80,12 @@ CREATE TABLE `Members`(
 	`Member_ID` INT UNSIGNED PRIMARY KEY,
     `fName` VARCHAR(30) NOT NULL,
     `lName` VARCHAR(30),
-    `CNIC` INT(13) UNSIGNED NOT NULL,
+    `CNIC` DECIMAL(13, 0) UNSIGNED NOT NULL,
     `Email` VARCHAR(40) NOT NULL,
-    `Phone` INT(11) UNSIGNED NOT NULL,
+    `Phone` DECIMAL(11, 0) UNSIGNED NOT NULL,
     `Password` VARCHAR(40) NOT NULL,
     `Joining_Date` DATETIME DEFAULT CURRENT_TIMESTAMP,
     `isAuthenticated` BOOL DEFAULT FALSE
-    -- `Card_Number` INT UNSIGNED,
-    -- `Card_Expiry` DATE
 );
 
 CREATE TABLE `Member_Reservation`(
@@ -107,7 +106,6 @@ CREATE TABLE `NonMember_Reservation`(
 	`Res_ID` INT UNSIGNED,
     `fname` VARCHAR(30) NOT NULL,
     `lname` VARCHAR(30),
-    `CNIC` INT(13) UNSIGNED NOT NULL,
     FOREIGN KEY (Res_ID) REFERENCES Reservations(Res_ID)
 );
     
@@ -116,12 +114,28 @@ CREATE TABLE `Employee`(
     `fName` VARCHAR(30) NOT NULL,
     `lName` VARCHAR(30) NOT NULL,
     `Email` VARCHAR(40) NOT NULL,
-    `Phone` INT(11) UNSIGNED NOT NULL,
-    `CNIC` INT(13) UNSIGNED NOT NULL,
+    `Phone` DECIMAL(11, 0) UNSIGNED NOT NULL,
+    `CNIC` DECIMAL(13, 0) UNSIGNED NOT NULL,
     `Password` VARCHAR(40) NOT NULL,
     `JobTitle` VARCHAR(30) NOT NULL,
     `HireDate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
+
+-- DELIMITER //
+
+-- CREATE FUNCTION TicketCost(stype VARCHAR(2), seats INT, numGlasses INT) RETURNS int DETERMINISTIC
+-- BEGIN
+-- 	IF stype="2D" THEN
+-- 		RETURN 
+--     END IF;
+
+--   Select current_date()into date2;
+--   RETURN year(date2)-year(date1);
+-- END 
+
+-- //
+
+-- DELIMITER ;
 
 CREATE OR REPLACE VIEW `VU_Reserved_Seats` AS
 SELECT f.Title, st.Show_Date, st.Start_Time, st.Show_Type, sc.Screen_Name, rs.SeatNum 
@@ -130,3 +144,12 @@ JOIN ShowTimes st USING (Film_ID)
 JOIN Screens sc USING (Screen_ID)
 JOIN Reservations res USING (Show_ID) 
 JOIN Res_Seats rs USING (Res_ID);
+
+-- CREATE OR REPLACE VIEW `Monthly_Sales` AS
+-- SELECT MONTH(st.Show_Date) "Month", YEAR(st.Show_Date) "Year",
+-- SUM(ResCost())
+-- FROM Showtimes st 
+-- JOIN reservations r USING (Show_ID)
+-- JOIN res_seats rs USING (Res_ID)
+-- JOIN orders o USING (Res_ID)
+-- GROUP BY MONTH(st.Show_Date), YEAR(st.Show_Date);
