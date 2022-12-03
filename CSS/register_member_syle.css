@@ -8,6 +8,10 @@ h1{
     margin-bottom: 30px;
 }
 
+h3{
+  text-align: center;
+}
+
 form{
     /* background-color: "#002D62"; */
     display: flex;

@@ -55,6 +55,30 @@ function insertFilm(film_id, title, genre, desc_, run_time, rating, cover_img, s
 
 }
 
+function insertInauthenticatedMember(fname, lname, cnic, email, phone, password){
+    phone = parseInt(phone);
+    cnic = parseInt(cnic);
+    joining_date = new Date();
+    var values = [[fname, lname, cnic, email, phone, password, joining_date, false]];
+    console.log(values);
+    con.query("insert into members (fname, lname, cnic, email, phone, password, joining_date, isauthenticated) values (?)", values, (err, result) => {
+        if (err) {
+            console.log(err)
+        }
+        console.log(result);
+    })
+}
+
+function memberAuthentication(email){
+    var update = [true, email];
+    con.query("update members set isauthenticated = (?) where email = (?)", update, (err, result) => {
+        if (err) {
+            console.log(err)
+        }
+        console.log(result);
+    })
+}
+
 async function retrieveFilm(film_id) {
     const result = await new Promise((resolve) => {
         con.query("SELECT * FROM dummy_films where film_id = (?)", [film_id], (err, res) => {
@@ -73,6 +97,27 @@ async function retrieveFilm(film_id) {
     return result;
 }
 
+async function retrieveMember(email){
+    const result = await new Promise((resolve) => {
+        con.query("SELECT * FROM members where email = (?)", [email], (err, res) => {
+            if (err) throw err;
+            resolve(res);
+        })
+    })
+    return result;
+}
+
+async function checkMemberPresent(email, res, req){
+    const result = await retrieveMember(email);
+    if (result.length === 0){
+        insertInauthenticatedMember(req.body.firstName, req.body.lastName, req.body.cnic, req.body.email, req.body.cellNo, req.body.password);
+        userVerification(userEmail, response);
+    }else{
+        res.render("registerMember.ejs", {message: `User with email ${email} already Present`});
+    }
+
+}
+
 
 function getOptions(res) {
     con.query("SELECT * FROM dummy_films", function (err, result, fields) {
@@ -84,9 +129,13 @@ function getOptions(res) {
     
 }
 
-async function userVerification(receiver, res, in_correct){
+async function userVerification(receiver, res){
     verificationCode = await mailVerification(receiver);
-    res.render("enterCode.ejs", {email: receiver, incorrect: in_correct});
+    res.render("enterCode.ejs", {email: receiver});
+}
+
+async function resendMail(receiver){
+    verificationCode = await mailVerification(receiver);
 }
 
 app.get("/", (req, res) => {
@@ -98,7 +147,7 @@ app.get("/booking", (req, res) => {
 })
 
 app.get("/registerMemberPage", (req, res) => {
-    res.render("registerMember.ejs")
+    res.render("registerMember.ejs", {message: ""});
 })
 
 app.post("/seeMore", (req, res) => {
@@ -122,7 +171,8 @@ app.post("/filmInsert", (req, res) => {
 app.post("/verify", (req, res) => {
     userEmail = req.body.email;
     response = res;
-    userVerification(userEmail, response, "");
+    console.log(req.body.cellNo);
+    checkMemberPresent(userEmail, res, req);
 })
 
 app.post("/codeEntered", (req, res) => {
@@ -135,9 +185,18 @@ app.post("/codeEntered", (req, res) => {
     console.log(codeEntered);
     let verified = codeEntered===verificationCode?true:false;
     console.log(verified);
+    if (verified){
+        memberAuthentication(userEmail);
+    }
     res.render("verificationSuccess.ejs", {verificationStatus: verified?"Your Account Is Made!":"Incorrect Code Entered", action:verified?"/":"/registerMemberPage", buttonText: verified?"Done":"Register Again"});
     // res.render("verificationSuccess.ejs");
     
+})
+
+app.post("/resend/:userEmail", (req, res) => {
+    console.log(userEmail);
+    resendMail(userEmail);
+    res.render("enterCode.ejs", {email: userEmail})
 })
 
 app.listen(3000, () => {

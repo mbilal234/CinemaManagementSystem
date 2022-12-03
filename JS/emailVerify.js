@@ -23,7 +23,7 @@ function mailVerification(receiver){
     message = {
         from: "cinema.ticketing.system117@gmail.com",
         to: receiver,
-        subject: "Subject",
+        subject: "Account Verification",
         text: `Your Verification Code is ${verificationCode}`
     }
     transporter.sendMail(message, function(err, info) {
