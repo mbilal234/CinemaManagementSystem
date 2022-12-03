@@ -28,12 +28,13 @@ var con = mysql.createConnection({
 });
 
 async function openSeeMore(film_id, res) {
+    console.log(film_id);
     const result = await retrieveFilm(film_id);
     // fetch(result[0][6]);
     res.render("viewFilm.ejs", {
-        name: result[0].title, cover_img: result[0].cover_img, desc_: result[0].desc_,
-        run_time: result[0].run_time, rating: result[0].rating, genre: result[0].genre, start_date: result[0].start_date,
-        end_date: result[0].end_date
+        name: result[0].Title, cover_img: result[0].Cover_Img, desc_: result[0].Description,
+        run_time: result[0].Run_Time, rating: result[0].Rating, genre: result[0].Genre, start_date: result[0].Start_Date,
+        end_date: result[0].End_Date
     });
 }
 
@@ -81,19 +82,19 @@ function memberAuthentication(email){
 
 async function retrieveFilm(film_id) {
     const result = await new Promise((resolve) => {
-        con.query("SELECT * FROM films where film_id = (?)", [film_id], (err, res) => {
+        con.query("SELECT * FROM films where Film_Id = (?)", [film_id], (err, res) => {
             if (err) throw err;
             resolve(res);
         })
     })
     const imageUrl = await new Promise((resolve)=>{
-        con.query("SELECT convert(cover_img using utf8) FROM films where film_id = (?)", [film_id], (err, res) => {
+        con.query("SELECT convert(cover_img using utf8) FROM films where Film_ID = (?)", [film_id], (err, res) => {
             if (err) throw err;
             resolve(res)
         })
     })
     // console.log(imageUrl);
-    result[0].cover_img = "http://localhost:3000/images/"+imageUrl[0]["convert(cover_img using utf8)"];
+    result[0].Cover_Img = "http://localhost:3000/images/"+imageUrl[0]["convert(cover_img using utf8)"];
     return result;
 }
 
@@ -122,6 +123,7 @@ async function checkMemberPresent(email, res, req){
 function getOptions(res) {
     con.query("SELECT * FROM films", function (err, result, fields) {
         if (err) throw err;
+        console.log(result[0].Title);
         res.render("booking.ejs", { result: result, iterator: result.length });
         return;
     });
