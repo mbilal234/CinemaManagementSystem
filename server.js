@@ -37,16 +37,16 @@ async function openSeeMore(film_id, res) {
     });
 }
 
-function insertFilm(film_id, title, genre, desc_, run_time, rating, cover_img, start_date, end_date) {
-    film_id = parseInt(film_id);
+function insertFilm(title, genre, desc_, run_time, rating, cover_img, start_date, end_date) {
+    // film_id = parseInt(film_id);
     run_time = parseInt(run_time);
-    var values = [[film_id, title, genre, desc_, run_time, rating, cover_img, start_date, end_date]];
+    var values = [[title, genre, desc_, run_time, rating, cover_img, start_date, end_date]];
     fetch("http://localhost:3000/images/"+cover_img).then((res)=>{
         return res.blob;
     }).then((blob) => {
-        values[0][6] = blob;
+        values[0][5] = blob;
     });
-    con.query("insert into dummy_films (film_id, title, genre, desc_, run_time, rating, cover_img, start_date, end_date) values (?)", values, (err, result) => {
+    con.query("insert into films (title, genres, description, run_time, rating, cover_img, start_date, end_date) values (?)", values, (err, result) => {
         if (err) {
             console.log(err)
         }
@@ -81,13 +81,13 @@ function memberAuthentication(email){
 
 async function retrieveFilm(film_id) {
     const result = await new Promise((resolve) => {
-        con.query("SELECT * FROM dummy_films where film_id = (?)", [film_id], (err, res) => {
+        con.query("SELECT * FROM films where film_id = (?)", [film_id], (err, res) => {
             if (err) throw err;
             resolve(res);
         })
     })
     const imageUrl = await new Promise((resolve)=>{
-        con.query("SELECT convert(cover_img using utf8) FROM dummy_films where film_id = (?)", [film_id], (err, res) => {
+        con.query("SELECT convert(cover_img using utf8) FROM films where film_id = (?)", [film_id], (err, res) => {
             if (err) throw err;
             resolve(res)
         })
@@ -120,7 +120,7 @@ async function checkMemberPresent(email, res, req){
 
 
 function getOptions(res) {
-    con.query("SELECT * FROM dummy_films", function (err, result, fields) {
+    con.query("SELECT * FROM films", function (err, result, fields) {
         if (err) throw err;
         res.render("booking.ejs", { result: result, iterator: result.length });
         return;
@@ -164,7 +164,7 @@ app.get("/insert", (req, res) => {
 })
 
 app.post("/filmInsert", (req, res) => {
-    insertFilm(req.body.filmId, req.body.filmName, req.body.genre, req.body.desc, req.body.runTime, req.body.rating, req.body.imgUrl, req.body.startDate, req.body.endDate);
+    insertFilm(req.body.filmName, req.body.genre, req.body.desc, req.body.runTime, req.body.rating, req.body.imgUrl, req.body.startDate, req.body.endDate);
     res.redirect("/");
 })
 
