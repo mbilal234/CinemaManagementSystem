@@ -144,6 +144,12 @@ JOIN Screens sc USING (Screen_ID)
 JOIN Reservations res USING (Show_ID) 
 JOIN Res_Seats rs USING (Res_ID);
 
+CREATE OR REPLACE VIEW `VU_Now_Showing` AS
+SELECT * FROM Films f WHERE CURRENT_DATE() BETWEEN f.Start_Date AND f.End_Date;
+
+CREATE OR REPLACE VIEW `VU_Coming_Soon` AS
+SELECT * FROM Films f WHERE CURRENT_DATE() < f.Start_Date;
+
 -- CREATE OR REPLACE VIEW `Monthly_Sales` AS
 -- SELECT MONTH(st.Show_Date) "Month", YEAR(st.Show_Date) "Year",
 -- SUM(ResCost())
