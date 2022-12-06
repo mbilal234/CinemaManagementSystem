@@ -1,3 +1,4 @@
+<% if (loggedIn){ %>
 <link rel="stylesheet" href="./CSS/Style.css">
 <div>
     <img class="main-logo" src="./images/CinemaLogo.jpg"/>
@@ -112,3 +113,7 @@
   
 
   <script src="JS/scripts.js"></script>
+
+<% }else{ %>
+<h1>Error 404</h1>
+<% } %>

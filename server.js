@@ -10,6 +10,8 @@ let verificationCode;
 let userEmail;
 let response;
 
+let emailLoggedIn;
+
 app.set("view-engine", "ejs");
 
 app.use('/CSS', express.static('CSS'));
@@ -22,7 +24,7 @@ var mysql = require('mysql');
 var con = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "Abdularham123",
+    password: "abdularham123",
     database: "cinema",
     insecureAuth: true
 });
@@ -72,6 +74,7 @@ function insertInauthenticatedMember(fname, lname, cnic, email, phone, password)
 
 function memberAuthentication(email){
     var update = [true, email];
+    console.log(email, true);
     con.query("update members set isauthenticated = (?) where email = (?)", update, (err, result) => {
         if (err) {
             console.log(err)
@@ -124,7 +127,7 @@ function getOptions(res) {
     con.query("SELECT * FROM films", function (err, result, fields) {
         if (err) throw err;
         console.log(result[0].Title);
-        res.render("booking.ejs", { result: result, iterator: result.length });
+        res.render("booking.ejs", { result: result, iterator: result.length, loggedIn : emailLoggedIn });
         return;
     });
     // console.log(result);
@@ -140,8 +143,47 @@ async function resendMail(receiver){
     verificationCode = await mailVerification(receiver);
 }
 
+async function retrieveUser(req, res){
+    const emailEntered = req.body.email;
+    const passwordEntered = req.body.password;
+    const result = await new Promise((resolve) => {
+        con.query("SELECT * FROM members where email = (?)", [emailEntered], (err, res) => {
+            if (err) throw err;
+            resolve(res);
+        })
+    })
+    if (result.length==1){
+        if (result[0].isAuthenticated){
+            if (result[0].Password === passwordEntered){
+                emailLoggedIn = emailEntered;
+                res.redirect("/booking");
+            }else{
+                res.send("Incorrect Password");
+            }
+        }else{
+            userEmail = emailEntered;
+            verificationCode = await mailVerification(emailEntered);
+            res.render("enterCode.ejs", {email: emailEntered});
+        }
+    }else{
+        res.send("No User With This Email");
+    }
+}
+
 app.get("/", (req, res) => {
     res.render("index.ejs");
+})
+
+app.get("/about", (req, res) => {
+    res.render("About.ejs");
+})
+
+app.get("/contact", (req, res) => {
+    res.render("Contact.ejs");
+})
+
+app.get("/sign-in-page", (req, res) => {
+    res.render("Sign-In.ejs");
 })
 
 app.get("/booking", (req, res) => {
@@ -157,8 +199,7 @@ app.post("/seeMore", (req, res) => {
 })
 
 app.post("/signup", (req, res) => {
-    console.log("Hello World")
-    res.redirect("/booking");
+    retrieveUser(req, res);
 })
 
 app.get("/insert", (req, res) => {
