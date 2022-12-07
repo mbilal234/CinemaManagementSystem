@@ -17,7 +17,7 @@ app.set("view-engine", "ejs");
 app.use('/CSS', express.static('CSS'));
 app.use('/JS', express.static('JS'));
 app.use('/images', express.static('images'));
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: false }));
 
 var mysql = require('mysql');
 
@@ -158,7 +158,7 @@ async function retrieveUser(req, res){
                 emailLoggedIn = emailEntered;
                 res.redirect("/booking");
             }else{
-                res.send("Incorrect Password");
+                res.render("Sign-In.ejs", {message: "Incorrect Password"});
             }
         }else{
             userEmail = emailEntered;
@@ -166,7 +166,7 @@ async function retrieveUser(req, res){
             res.render("enterCode.ejs", {email: emailEntered});
         }
     }else{
-        res.send("No User With This Email");
+        res.render("Sign-In.ejs", {message: "No User With This Email"});
     }
 }
 
@@ -183,7 +183,7 @@ app.get("/contact", (req, res) => {
 })
 
 app.get("/sign-in-page", (req, res) => {
-    res.render("Sign-In.ejs");
+    res.render("Sign-In.ejs", {message: ""})
 })
 
 app.get("/booking", (req, res) => {
@@ -207,6 +207,7 @@ app.get("/insert", (req, res) => {
 })
 
 app.post("/filmInsert", (req, res) => {
+    console.log(req.body);
     insertFilm(req.body.filmName, req.body.genre, req.body.desc, req.body.runTime, req.body.rating, req.body.imgUrl, req.body.startDate, req.body.endDate);
     res.redirect("/");
 })
@@ -240,6 +241,11 @@ app.post("/resend/:userEmail", (req, res) => {
     console.log(userEmail);
     resendMail(userEmail);
     res.render("enterCode.ejs", {email: userEmail})
+})
+
+app.get("/logout", (req, res)=>{
+    emailLoggedIn = "";
+    res.render("Sign-In.ejs", {message: ""})
 })
 
 app.listen(3000, () => {
