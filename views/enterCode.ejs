@@ -1,15 +1,25 @@
 <link rel="stylesheet" href="../CSS/enterCode.css">
-<h1>Enter the code we have sent to <%= email %></h1>
-<form class="form1" action="/codeEntered" method="post">
-    <div class="inputs">
-        <input type="number" min="0" max="9" name="digit_1">
-        <input type="number" min="0" max="9" name="digit_2">
-        <input type="number" min="0" max="9" name="digit_3">
-        <input type="number" min="0" max="9" name="digit_4">
-        <input type="number" min="0" max="9" name="digit_5">
-        <input type="number" min="0" max="9" name="digit_6">
-        <button>Enter</button>
-</form>
-<form action="/resend/<%= email %>" method="post">
-    <button>Resend</button>
-</form>
+<div id="wrapper">
+    <div id="dialog">
+      <button class="close">×</button>
+      <h3>Please enter the 6-digit verification code we sent via Email:</h3>
+      <form class="form1" action="/codeEntered" method="post">
+      <div id="form">
+        <input type="number" maxLength="1" size="1" min="0" max="9"  />
+        <input type="number" maxLength="1" size="1" min="0" max="9"  />
+        <input type="number" maxLength="1" size="1" min="0" max="9" />
+        <input type="number" maxLength="1" size="1" min="0" max="9" />
+        <input type="number" maxLength="1" size="1" min="0" max="9"  />
+        <input type="number" maxLength="1" size="1" min="0" max="9" />
+        <button class="btn btn-primary btn-embossed">Verify</button>
+      </div>
+    </form>
+      <div>
+        Didn't receive the code?<br />
+        <form action="/resend/<%= email %>" method="post">
+            <button>Resend</button>
+        </form>
+      </div>
+       <img src="http://jira.moovooz.com/secure/attachment/10424/VmVyaWZpY2F0aW9uLnN2Zw==" alt="test" />
+    </div>
+  </div>
