@@ -4,6 +4,7 @@ const app = express();
 const path = require("path");
 const bodyParser = require('body-parser');
 const mailVerification = require("./JS/emailVerify.js");
+const bcrypt = require('bcrypt');
 
 // Variables Required for email verification
 let verificationCode;
@@ -58,11 +59,12 @@ function insertFilm(title, genre, desc_, run_time, rating, cover_img, start_date
 
 }
 
-function insertInauthenticatedMember(fname, lname, cnic, email, phone, password){
+async function insertInauthenticatedMember(fname, lname, cnic, email, phone, password){
     phone = parseInt(phone);
+    const hashedPassword = await bcrypt.hash(password, 10);
     cnic = parseInt(cnic);
     joining_date = new Date();
-    var values = [[fname, lname, cnic, email, phone, password, joining_date, false]];
+    var values = [[fname, lname, cnic, email, phone, hashedPassword, joining_date, false]];
     console.log(values);
     con.query("insert into members (fname, lname, cnic, email, phone, password, joining_date, isauthenticated) values (?)", values, (err, result) => {
         if (err) {
@@ -126,7 +128,7 @@ async function checkMemberPresent(email, res, req){
 function getOptions(res) {
     con.query("SELECT * FROM films", function (err, result, fields) {
         if (err) throw err;
-        console.log(result[0].Title);
+        // console.log(result[0].Title);
         res.render("booking.ejs", { result: result, iterator: result.length, loggedIn : emailLoggedIn });
         return;
     });
@@ -145,7 +147,7 @@ async function resendMail(receiver){
 
 async function retrieveUser(req, res){
     const emailEntered = req.body.email;
-    const passwordEntered = req.body.password;
+    // const hashedPassword = await bcrypt.hash(req.body.password, 10);
     const result = await new Promise((resolve) => {
         con.query("SELECT * FROM members where email = (?)", [emailEntered], (err, res) => {
             if (err) throw err;
@@ -154,7 +156,8 @@ async function retrieveUser(req, res){
     })
     if (result.length==1){
         if (result[0].isAuthenticated){
-            if (result[0].Password === passwordEntered){
+            const passCorrect = await bcrypt.compare(req.body.password, result[0].Password);
+            if (passCorrect){
                 emailLoggedIn = emailEntered;
                 res.redirect("/booking");
             }else{
