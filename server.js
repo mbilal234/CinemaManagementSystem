@@ -20,6 +20,7 @@ app.use('/images', express.static('images'));
 app.use(bodyParser.urlencoded({ extended: false }));
 
 var mysql = require('mysql');
+const e = require("express");
 
 var con = mysql.createConnection({
     host: "localhost",

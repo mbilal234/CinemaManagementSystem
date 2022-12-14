@@ -80,6 +80,15 @@ ul {
     justify-content: space-around;
 }
 
+.d-flex {
+    height: auto;
+    margin: 0;
+}
+
+ul:not(.u-unstyled) {
+    margin: 0;
+}
+
 .nav-item {
     min-width: 8vw;
     display: flex;
