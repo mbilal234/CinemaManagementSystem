@@ -26,7 +26,7 @@ const e = require("express");
 var con = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "abdularham123",
+    password: "308NegraAroyoLane",
     database: "cinema",
     insecureAuth: true
 });
