@@ -21,7 +21,11 @@
 
 <body class="u-body u-xl-mode" data-lang="en">
 
-  <%- include('partials/navbar') %>
+  <%- include('partials/navbar', {active1: "nav-link active"}) %>
+  <script>document.getElementById("home").className="nav-link"</script>
+  <script>document.getElementById("about").className="nav-link"</script>
+  <script>document.getElementById("contact").className="nav-link"</script>
+  <script>document.getElementById("signin").className="nav-link active"</script>
 
     <div class="u-clearfix u-expanded-width u-layout-wrap u-block-control u-block-6ead-36"
       style="margin-top: 60px; margin-bottom: 60px; margin: auto" data-layout-wrap-id="3" data-block="99"

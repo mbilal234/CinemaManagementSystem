@@ -1,3 +1,4 @@
+-- Active: 1669611118298@@localhost@3306@company
 DROP SCHEMA IF EXISTS Cinema;
 CREATE SCHEMA Cinema;
 USE Cinema;
