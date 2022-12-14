@@ -19,7 +19,37 @@ CREATE TABLE `Films`(
 
 CREATE TABLE `Screens`(
 	`Screen_ID` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-	`Screen_Name` VARCHAR(15) NOT NULL
+	`Screen_Name` VARCHAR(15) NOT NULL,
+    `Capacity` INT UNSIGNED NOT NULL
+);
+
+CREATE TABLE `Seat_Types`(
+	`Seat_Type_ID` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `Type` VARCHAR(10) NOT NULL
+);
+
+CREATE TABLE `Seats`(
+	`Screen_ID` INT UNSIGNED NOT NULL,
+	`Seat_Type_ID` INT UNSIGNED NOT NULL,
+    `Seat_Number` VARCHAR(3) NOT NULL,
+    `Pos_X` INT UNSIGNED NOT NULL,
+    `Pos_Y` INT UNSIGNED NOT NULL,
+    FOREIGN KEY (Screen_ID) REFERENCES Screens(Screen_ID),
+    FOREIGN KEY (Seat_Type_ID) REFERENCES Seat_Types(Seat_Type_ID)
+);
+
+CREATE TABLE `Show_Types`(
+	`Show_Type_ID` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `Show_Type` VARCHAR(2)
+);
+
+CREATE TABLE `Ticket_Price`(
+	`Seat_Type_ID` INT UNSIGNED NOT NULL,
+	`Show_Type_ID` INT UNSIGNED NOT NULL,
+    `Price` INT UNSIGNED NOT NULL,
+    PRIMARY KEY (Seat_Type_ID, Show_Type_ID),
+    FOREIGN KEY (Seat_Type_ID) REFERENCES Seat_Types(Seat_Type_ID),
+    FOREIGN KEY (Show_Type_ID) REFERENCES Show_Types(Show_Type_ID)
 );
 
 CREATE TABLE `ShowTimes`(
@@ -28,9 +58,10 @@ CREATE TABLE `ShowTimes`(
     `Screen_ID` INT UNSIGNED,
     `Show_Date` DATE NOT NULL,
     `Start_Time` TIME NOT NULL,
-    `Show_Type` VARCHAR(2) NOT NULL,
+    `Show_Type_ID` INT UNSIGNED NOT NULL,
     FOREIGN KEY (Film_ID) REFERENCES Films(Film_ID),
-    FOREIGN KEY (Screen_ID) REFERENCES Screens(Screen_ID)
+    FOREIGN KEY (Screen_ID) REFERENCES Screens(Screen_ID),
+    FOREIGN KEY (Show_Type_ID) REFERENCES Show_Types(Show_Type_ID)
 );
 
 CREATE TABLE `Suppliers`(
@@ -137,13 +168,13 @@ CREATE TABLE `Employee`(
 
 -- DELIMITER ;
 
-CREATE OR REPLACE VIEW `VU_Reserved_Seats` AS
-SELECT f.Title, st.Show_Date, st.Start_Time, st.Show_Type, sc.Screen_Name, rs.SeatNum 
-FROM Films f
-JOIN ShowTimes st USING (Film_ID)
-JOIN Screens sc USING (Screen_ID)
-JOIN Reservations res USING (Show_ID) 
-JOIN Res_Seats rs USING (Res_ID);
+-- CREATE OR REPLACE VIEW `VU_Reserved_Seats` AS
+-- SELECT f.Title, st.Show_Date, st.Start_Time, st.Show_Type, sc.Screen_Name, rs.SeatNum 
+-- FROM Films f
+-- JOIN ShowTimes st USING (Film_ID)
+-- JOIN Screens sc USING (Screen_ID)
+-- JOIN Reservations res USING (Show_ID) 
+-- JOIN Res_Seats rs USING (Res_ID);
 
 CREATE OR REPLACE VIEW `VU_Now_Showing` AS
 SELECT * FROM Films f WHERE CURRENT_DATE() BETWEEN f.Start_Date AND f.End_Date;
