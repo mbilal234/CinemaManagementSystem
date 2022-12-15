@@ -11,6 +11,8 @@ let verificationCode;
 let userEmail;
 let response;
 
+const adminKey = "CoolAshhub";
+
 let emailLoggedIn;
 
 app.set("view-engine", "ejs");
@@ -21,7 +23,6 @@ app.use('/images', express.static('images'));
 app.use(bodyParser.urlencoded({ extended: false }));
 
 var mysql = require('mysql');
-const e = require("express");
 
 var con = mysql.createConnection({
     host: "localhost",
@@ -42,23 +43,6 @@ async function openSeeMore(film_id, res) {
     });
 }
 
-function insertFilm(title, genre, desc_, run_time, rating, cover_img, start_date, end_date) {
-    // film_id = parseInt(film_id);
-    run_time = parseInt(run_time);
-    var values = [[title, genre, desc_, run_time, rating, cover_img, start_date, end_date]];
-    fetch("http://localhost:3000/images/"+cover_img).then((res)=>{
-        return res.blob;
-    }).then((blob) => {
-        values[0][5] = blob;
-    });
-    con.query("insert into films (title, genres, description, run_time, rating, cover_img, start_date, end_date) values (?)", values, (err, result) => {
-        if (err) {
-            console.log(err)
-        }
-        console.log(result);
-    })
-
-}
 
 async function insertInauthenticatedMember(fname, lname, cnic, email, phone, password){
     phone = parseInt(phone);
@@ -204,10 +188,6 @@ app.post("/seeMore", (req, res) => {
 
 app.post("/signup", (req, res) => {
     retrieveUser(req, res);
-})
-
-app.get("/insert", (req, res) => {
-    res.render("insertFilm.ejs");
 })
 
 app.post("/filmInsert", (req, res) => {
