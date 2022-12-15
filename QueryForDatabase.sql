@@ -29,6 +29,7 @@ CREATE TABLE `Seat_Types`(
 );
 
 CREATE TABLE `Seats`(
+	`Seat_ID` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
 	`Screen_ID` INT UNSIGNED NOT NULL,
 	`Seat_Type_ID` INT UNSIGNED NOT NULL,
     `Seat_Number` VARCHAR(3) NOT NULL,
@@ -103,8 +104,9 @@ CREATE TABLE `Order_Details`(
 
 CREATE TABLE `Res_Seats`(
 	`Res_ID` INT UNSIGNED AUTO_INCREMENT,
-    `SeatNum` VARCHAR(3),
-    FOREIGN KEY (Res_ID) REFERENCES Reservations(Res_ID)
+    `Seat_ID` INT UNSIGNED NOT NULL,
+    FOREIGN KEY (Res_ID) REFERENCES Reservations(Res_ID),
+    FOREIGN KEY (Seat_ID) REFERENCES Seats(Seat_ID)
 );
 
 CREATE TABLE `Members`(
