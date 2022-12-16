@@ -76,6 +76,41 @@ async function openSeeMore(film_id, res) {
     });
 }
 
+function addScreen(req, res){
+    var values = [[req.body.screenName, req.body.capacity]];
+    console.log(req.body.screenName);
+    console.log(req.body.capacity);
+    con.query("insert into screens (screen_name, capacity) values (?)", values, (err, result)=>{
+        if (err) throw err;
+        res.send("New Screen Added");
+    })
+}
+
+async function addEmployee(req, res){
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    const phoneNumber = parseInt(req.body.phone);
+    const cnicNumber = parseInt(req.body.cnic);
+    var values = [[req.body.firstName, req.body.lastName, req.body.email, phoneNumber, cnicNumber, hashedPassword, req.body.jobTitle, new Date()]]
+    con.query("insert into employee (fname, lname, email, phone, cnic, password, jobtitle, hiredate) values (?)", values, (err, result)=>{
+        if (err) throw err;
+        res.send("New Employee Added");
+    })
+}
+
+async function getEmployee(req, res){
+    const idGiven = req.body.empId;
+    const result = await new Promise((resolve) => {
+        con.query("SELECT * FROM employee where Emp_ID = (?)", [idGiven], (err, res) => {
+            if (err) throw err;
+            resolve(res);
+        })
+    })
+    if (!result){
+        return res.send("No Employee Available with this id");
+    }
+    res.render("employeeInfo.ejs", {name: result[0].fName+" "+result[0].lName, email: result[0].Email, phone: result[0].Phone, cnic: result[0].CNIC, jobTitle: result[0].JobTitle, hireDate: result[0].HireDate})
+}
+
 app.set("view-engine", "ejs");
 
 
@@ -102,6 +137,30 @@ app.get("/viewFilms", (req, res)=>{
 
 app.post("/seeMore", (req, res)=>{
     openSeeMore(req.body.someName, res);
+})
+
+app.get("/addScreen", (req, res)=>{
+    res.render("newScreens.ejs");
+})
+
+app.post("/addScreen", (req, res)=>{
+    addScreen(req, res);
+})
+
+app.get("/addEmployee", (req, res)=>{
+    res.render("enterEmployee.ejs");
+})
+
+app.post("/addEmployee", (req, res)=>{
+    addEmployee(req, res);
+})
+
+app.get("/getEmployee", (req, res)=>{
+    res.render("enterEmployeeId.ejs");
+})
+
+app.post("/getEmployee", (req, res)=>{
+    getEmployee(req, res);
 })
 
 app.listen(5000, ()=>{

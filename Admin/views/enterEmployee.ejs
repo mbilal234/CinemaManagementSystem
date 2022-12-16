@@ -1,0 +1,18 @@
+<h1>Enter a New Employee</h1>
+<form action="addEmployee" method="post">
+    <label for="firstName">First Name</label>
+    <input type="text" name="firstName" id="firstName" required>
+    <label for="lastName">Last Name</label>
+    <input type="text" name="lastName" id="lastName" required>
+    <label for="email">Email Address</label>
+    <input type="email" name="email" id="email" required>
+    <label for="phone">Phone Number</label>
+    <input type="number" pattern = "\d{11,11}" name="phone" id="phone" required>
+    <label for="cnic">CNIC Number</label>
+    <input type="number" pattern = "\d{13,13}" name="cnic" id="cnic" required>
+    <label for="password">Password</label>
+    <input type="password" name="password" required id="password">
+    <label for="jobTitle">Job Title</label>
+    <input type="text" name="jobTitle" id="jobTitle" required>
+    <button>Submit</button>
+</form>
