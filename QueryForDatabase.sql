@@ -17,6 +17,11 @@ CREATE TABLE `Films`(
     CHECK (Rating <= 10)
 );
 
+CREATE TABLE `Genres` (
+	`Film_ID` INT UNSIGNED NOT NULL,
+    `Genre` VARCHAR(30) NOT NULL,
+    FOREIGN KEY (Film_ID) REFERENCES Films(Film_ID)
+);
 CREATE TABLE `Screens`(
 	`Screen_ID` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
 	`Screen_Name` VARCHAR(15) NOT NULL,
