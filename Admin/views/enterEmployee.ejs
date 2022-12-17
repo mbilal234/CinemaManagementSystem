@@ -1,18 +1,51 @@
-<h1>Enter a New Employee</h1>
-<form action="addEmployee" method="post">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/">Cinema Website</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/viewFilms">View Films</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/insertFilm">Insert Film</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/getEmployee">Get Employee</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="/addEmployee">Add Employee</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/addScreen">Add Screen</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+    
+  
+<div class="container mt-5">
+  <h1 class="mb-5">Enter a New Employee</h1>
+  <form action="addEmployee" method="post" class="form-group">
     <label for="firstName">First Name</label>
-    <input type="text" name="firstName" id="firstName" required>
+    <input type="text" name="firstName" id="firstName" class="form-control" required>
     <label for="lastName">Last Name</label>
-    <input type="text" name="lastName" id="lastName" required>
+    <input type="text" name="lastName" id="lastName" class="form-control" required>
     <label for="email">Email Address</label>
-    <input type="email" name="email" id="email" required>
+    <input type="email" name="email" id="email" class="form-control" required>
     <label for="phone">Phone Number</label>
-    <input type="number" pattern = "\d{11,11}" name="phone" id="phone" required>
+    <input type="number" pattern = "\d{11,11}" name="phone" id="phone" class="form-control" required>
     <label for="cnic">CNIC Number</label>
-    <input type="number" pattern = "\d{13,13}" name="cnic" id="cnic" required>
+    <input type="number" pattern = "\d{13,13}" name="cnic" id="cnic" class="form-control" required>
     <label for="password">Password</label>
-    <input type="password" name="password" required id="password">
+    <input type="password" name="password" required id="password" class="form-control">
     <label for="jobTitle">Job Title</label>
-    <input type="text" name="jobTitle" id="jobTitle" required>
-    <button>Submit</button>
-</form>
+    <input type="text" name="jobTitle" id="jobTitle" class="form-control" required>
+    <button class="btn btn-primary mt-3">Submit</button>
+  </form>
+</div>

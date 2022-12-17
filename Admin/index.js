@@ -151,9 +151,11 @@ app.get("/addEmployee", (req, res)=>{
     res.render("enterEmployee.ejs");
 })
 
+
 app.post("/addEmployee", (req, res)=>{
     addEmployee(req, res);
 })
+
 
 app.get("/getEmployee", (req, res)=>{
     res.render("enterEmployeeId.ejs");
