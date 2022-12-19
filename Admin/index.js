@@ -16,6 +16,9 @@ var con = mysql.createConnection({
     insecureAuth: true
 });
 
+const ticketType = ["2D", "3D"];
+const price = [500, 800];
+
 function insertFilm(res, title, genre, desc_, run_time, rating, cover_img, start_date, end_date) {
     // film_id = parseInt(film_id);
     run_time = parseInt(run_time);
@@ -111,6 +114,26 @@ async function getEmployee(req, res){
     res.render("employeeInfo.ejs", {name: result[0].fName+" "+result[0].lName, email: result[0].Email, phone: result[0].Phone, cnic: result[0].CNIC, jobTitle: result[0].JobTitle, hireDate: result[0].HireDate})
 }
 
+async function insertPrices(req, res){
+    const query = "SELECT * FROM ticket_price where (Show_Type_ID in (select Show_Type_ID from show_types where Show_Type = (?)) and (Seat_Type_ID in (select Seat_Type_ID from seat_types where Type = (?))))";
+    const result = await new Promise((resolve) => {
+        con.query(query, [req.body.showtype, req.body.seattype], (err, res) => {
+            if (err) throw err;
+            resolve(res);
+        })
+    })
+    if (result.length===0){
+        return res.send("No Ticket present with this show and seat type");
+    }
+    const data = [req.body.price, req.body.showtype, req.body.seattype];
+    const sql = "update ticket_price set Price = (?) where (Show_Type_ID in (select Show_Type_ID from show_types where Show_Type = (?)) and (Seat_Type_ID in (select Seat_Type_ID from seat_types where Type = (?))))";
+    con.query(sql, data, (err, result) => {
+        if (err) throw err;
+        console.log("Ok");
+    })
+    res.send("Work Done");  
+}
+
 app.set("view-engine", "ejs");
 
 
@@ -163,6 +186,15 @@ app.get("/getEmployee", (req, res)=>{
 
 app.post("/getEmployee", (req, res)=>{
     getEmployee(req, res);
+})
+
+app.get("/prices", (req, res) => {
+    const iterator = ticketType.length;
+    res.render("prices.ejs", {ticketType, price, iterator});
+})
+
+app.post("/updatePrices", (req, res) => {
+    insertPrices(req, res);
 })
 
 app.listen(5000, ()=>{

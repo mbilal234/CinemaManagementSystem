@@ -1,0 +1,30 @@
+<h1>Ticket Prices</h1>
+<style>
+    table,
+    th,
+    td {
+        border: 1px solid black;
+    }
+</style>
+<table>
+    <tr>
+        <th>Ticket Type</th>
+        <th>Price</th>
+    </tr>
+    <% while(iterator >= 0){ %>
+        <tr>
+            <td><%= ticketType[iterator] %></td>
+            <td><%= price[iterator--] %></td>
+        </tr>
+    <% } %>
+</table>
+<h1>Update Prices</h1>
+<form action="/updatePrices" method="post">
+    <label for="showtype">Enter Show Type</label>
+    <input type="text" name="showtype" id="showtype">
+    <label for="seattype">Enter Seat Type</label>
+    <input type="text" name="seattype" id="seattype">
+    <label for="price">Enter Price</label>
+    <input type="number" min="0" name="price" id="price">
+    <button>Submit</button>
+</form>
