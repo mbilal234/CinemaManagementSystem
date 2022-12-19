@@ -1,32 +1,34 @@
-<link rel="stylesheet" href="../CSS/insertFilm.css" media="screen">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 <%- include('partials/navbar') %>
-    
-<form action="/insertFilm" method="post">
+
+<div class ="container mt-5">
+<h1 class="mb-5">Enter a New Film</h1>
+<form action="/insertFilm" method="post" class = "form-group">
     <label for="filmName">Enter Film Name</label>
-    <input type="text" name="filmName">
+    <input type="text" name="filmName" class="form-control" required>
 
     <label for="genre">Enter Genre</label>
-    <input type="text" name="genre" required>
+    <input type="text" name="genre" class="form-control" required>
 
     <label for="desc">Enter Description</label>
-    <input type="text" name="desc" required>
+    <input type="text" name="desc" class="form-control" required>
 
     <label for="runTime">Enter Run Time</label>
-    <input type="text" name="runTime" required>
+    <input type="text" name="runTime" class="form-control" required>
 
     <label for="rating">Enter Rating</label>
-    <input type="text" name="rating" required>
+    <input type="text" name="rating" class="form-control" required>
 
     <label for="imgUrl">Enter Cover Image Url</label>
     <input type="file" name="imgUrl" id="imageSelecter" class="form-control-file border" required/>
 
     <label for="startDate">Enter Start Date</label>
-    <input type="text" name="startDate" required>
+    <input type="text" name="startDate" class="form-control" required>
 
     <label for="endDate">Enter End Date</label>
-    <input type="text" name="endDate" required>
+    <input type="text" name="endDate" class="form-control" required>
 
-    <button>Submit</button>
+    <button class ="btn btn-primary mt-3 mx-auto">Submit</button>
 
 </form>
+</div>

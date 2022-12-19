@@ -1,13 +1,18 @@
-<h1>Show Types</h1>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  </head>  
+<%- include('partials/navbar') %>
+
+<div class="container mt-5">
 <% if (iterator >= 0){ %>
     <h2>Show Types Present</h2>
     <% while(iterator>=0) { %>
         <h4><%= showTypes[iterator--].Show_Type %></h4>
     <% } %>
 <% } %>
-<h2>Create Show Type</h2>
-<form action="/addShowType" method="post">
+<h1 class = "mx-auto mt-3 mb-3">Create Show Type</h1>
+<form action="/addShowType" method="post" class = "form-horizontal">
     <label for="showType">Enter Name of the Show Type</label>
-    <input type="text" name="showType" id="showType" required>
-    <button>Submit</button>
+    <input type="text" name="showType" id="showType" class = "form-control" required>
+    <button class = "btn btn-primary mx-auto mt-3 mb-3">Submit</button>
 </form>

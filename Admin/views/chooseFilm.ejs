@@ -1,9 +1,10 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 <%- include('partials/navbar') %>
-    
-<form action="/seeMore" method="post" class="form-group movie-container">
-  <label style="font-size: 1em;" class="d-block">Pick a movie:</label>
-  <select id="movie" name="someName" class="form-control">
+ 
+<div class="container mt-5">
+  <h1 class="mt-5 mb-5 mx-auto">Choose a Film</h1>
+<form action="/seeMore" method="post" class="mx-auto">
+  <select id="movie" name="someName" class="form-control mt-3 mb-3">
     <% while (iterator> 0) {%>
       <option value="<%=result[iterator-1].Film_ID%>" name="<%=result[iterator-1].Title%>">
         <%=result[iterator-1].Title%></option>
@@ -11,3 +12,4 @@
     </select>
     <button id="seeMoreButton" class="btn btn-primary mt-3">See More</button>
   </form>
+</div>

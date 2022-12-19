@@ -1,26 +1,34 @@
-<h1>CreateShow</h1>
-<form action="/addShow" method="post">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  </head>
+<%- include('partials/navbar') %>
+
+<div class="container mt-5">
+<h1 class="mb-5 mt-5 mx-auto">Create Show</h1>
+
+<form action="/addShow" method="post" class = "mx-auto">
     <label for="film">Select Film</label>
-    <select name="film" id="film">
-        <% while (iterator2>=0) { %>
-            <option value="<%=films[iterator2].Film_ID %>"><%=films[iterator2--].Title%></option>
-        <%} %>
+    <select name="film" id="film" class="form-control">
+      <% while (iterator2>=0) { %>
+        <option value="<%=films[iterator2].Film_ID %>"><%=films[iterator2--].Title%></option>
+      <%} %>
     </select>
     <label for="showType">Select Show Type</label>
-    <select name="showType" id="showType">
-        <% while (iterator>=0) { %>
-            <option value="<%=showTypes[iterator].Show_Type_ID %>"><%=showTypes[iterator--].Show_Type%></option>
-        <%} %>
+    <select name="showType" id="showType" class="form-control">
+      <% while (iterator>=0) { %>
+        <option value="<%=showTypes[iterator].Show_Type_ID %>"><%=showTypes[iterator--].Show_Type%></option>
+      <%} %>
     </select>
     <label for="screen">Select Screen</label>
-    <select name="screen" id="screen">
-        <% while (iterator1>=0) { %>
-            <option value="<%=screens[iterator1].Screen_ID %>"><%=screens[iterator1--].Screen_Name%></option>
-        <%} %>
+    <select name="screen" id="screen" class="form-control">
+      <% while (iterator1>=0) { %>
+        <option value="<%=screens[iterator1].Screen_ID %>"><%=screens[iterator1--].Screen_Name%></option>
+      <%} %>
     </select>
     <label for="showdate">Enter Show Date</label>
-    <input type="date" name="showDate" id="showDate">
+    <input type="date" name="showDate" id="showDate" class="form-control">
     <label for="startTime">Enter Start Time</label>
-    <input type="text" name="startTime" id="startTime">
-    <button>Submit</button>
-</form>
+    <input type="text" name="startTime" id="startTime" class="form-control">
+    <button class="btn btn-primary mt-3">Submit</button>
+  </form>
+</div>
