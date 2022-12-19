@@ -1,0 +1,13 @@
+<h1>Show Types</h1>
+<% if (iterator >= 0){ %>
+    <h2>Show Types Present</h2>
+    <% while(iterator>=0) { %>
+        <h4><%= showTypes[iterator--].Show_Type %></h4>
+    <% } %>
+<% } %>
+<h2>Create Show Type</h2>
+<form action="/addShowType" method="post">
+    <label for="showType">Enter Name of the Show Type</label>
+    <input type="text" name="showType" id="showType" required>
+    <button>Submit</button>
+</form>

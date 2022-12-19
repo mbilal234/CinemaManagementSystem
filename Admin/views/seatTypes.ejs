@@ -1,0 +1,13 @@
+<h1>Seat Types</h1>
+<% if (iterator >= 0){ %>
+    <h2>Seat Types Present</h2>
+    <% while(iterator>=0) { %>
+        <h4><%= seatTypes[iterator--].Type %></h4>
+    <% } %>
+<% } %>
+<h2>Create Show Type</h2>
+<form action="/addSeatType" method="post">
+    <label for="seatType">Enter Name of the Show Type</label>
+    <input type="text" name="seatType" id="seatType" required>
+    <button>Submit</button>
+</form>

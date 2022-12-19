@@ -36,10 +36,12 @@ async function openSeeMore(film_id, res) {
     console.log(film_id);
     const result = await retrieveFilm(film_id);
     // fetch(result[0][6]);
+    console.log(result[0].Title)
+    console.log(film_id);
     res.render("viewFilm.ejs", {
         name: result[0].Title, cover_img: result[0].Cover_Img, desc_: result[0].Description,
         run_time: result[0].Run_Time, rating: result[0].Rating, genre: result[0].Genre, start_date: result[0].Start_Date,
-        end_date: result[0].End_Date
+        end_date: result[0].End_Date, filmID: film_id
     });
 }
 
@@ -84,6 +86,7 @@ async function retrieveFilm(film_id) {
         })
     })
     // console.log(imageUrl);
+    filmTitle = result[0].Title;
     result[0].Cover_Img = "http://localhost:3000/images/"+imageUrl[0]["convert(cover_img using utf8)"];
     return result;
 }
@@ -158,6 +161,52 @@ async function retrieveUser(req, res){
     }
 }
 
+async function retrievShows(req, res){
+    const result = await new Promise((resolve) => {
+        con.query("SELECT * FROM showtimes where Film_ID = (?)", [req.params.filmID], (err, reso) => {
+            if (err) throw err;
+            resolve(reso);
+        })
+    })
+    const iterator = result.length-1;
+    for (let i=0; i<=iterator; i++){
+        const showType = await new Promise((resolve) => {
+            con.query("SELECT Show_Type FROM show_types where Show_Type_ID = (?)", [result[i].Show_Type_ID], (err, reso) => {
+                if (err) throw err;
+                resolve(reso);
+            })
+        })
+        console.log(showType[0].Show_Type)
+        result[i].Show_Type_ID = showType[0].Show_Type;
+    }
+    res.render("viewShows.ejs", {title: req.params.title, result, iterator});
+}
+
+async function bookReservation(req, res){
+    console.log(emailLoggedIn)
+    const memberId = await new Promise((resolve) => {
+        con.query("SELECT * FROM members where Email = (?)", [emailLoggedIn], (err, reso) => {
+            if (err) throw err;
+            resolve(reso);
+        })
+    })
+    const memberID = memberId[0].Member_ID;
+    con.query("insert into reservations (Show_ID) values (?)", [[req.params.showID]], (err, reso)=>{
+        if (err) throw err;
+    })
+    const result = await new Promise((resolve) => {
+        con.query("SELECT * FROM reservations", (err, reso) => {
+            if (err) throw err;
+            resolve(reso);
+        })
+    })
+    const resID = result[result.length-1].Res_ID;
+    con.query("insert into member_reservation (Member_ID, Res_ID) values (?)", [[memberID, resID]], (err, reso)=>{
+        if (err) throw err;
+    })
+    res.send("Your Booking Is Done and the Payment has been made");
+}
+
 app.get("/", (req, res) => {
     res.render("index.ejs");
 })
@@ -230,6 +279,14 @@ app.post("/resend/:userEmail", (req, res) => {
 app.get("/logout", (req, res)=>{
     emailLoggedIn = "";
     res.render("Sign-In.ejs", {message: ""})
+})
+
+app.get("/getShows/:title/:filmID", (req, res)=>{
+    retrievShows(req, res);
+})
+
+app.get("/bookTicket/:showID", (req, res) => {
+    bookReservation(req, res);
 })
 
 app.listen(3000, () => {

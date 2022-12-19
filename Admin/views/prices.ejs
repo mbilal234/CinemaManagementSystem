@@ -21,10 +21,10 @@
 <h1>Update Prices</h1>
 <form action="/updatePrices" method="post">
     <label for="showtype">Enter Show Type</label>
-    <input type="text" name="showtype" id="showtype">
+    <input type="text" name="showtype" id="showtype" required>
     <label for="seattype">Enter Seat Type</label>
-    <input type="text" name="seattype" id="seattype">
+    <input type="text" name="seattype" id="seattype" required>
     <label for="price">Enter Price</label>
-    <input type="number" min="0" name="price" id="price">
+    <input type="number" min="0" name="price" id="price" required>
     <button>Submit</button>
 </form>

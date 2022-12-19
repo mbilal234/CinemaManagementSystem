@@ -1,0 +1,8 @@
+<h1>All the Planned Shows of <%= title %></h1>
+<% while (iterator >=0){ %>
+    <h2><%= result[iterator].Show_Type %></h2>
+    <h2><%= result[iterator].Show_Date %></h2>
+    <h2><%= result[iterator].Start_Time %></h2>
+    <h2>Payment will be made By easypaisa</h2>
+    <a href="\bookTicket\<%= result[iterator--].Show_ID %>"><button>Book</button></a>
+<% } %>

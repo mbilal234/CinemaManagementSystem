@@ -1,0 +1,26 @@
+<h1>CreateShow</h1>
+<form action="/addShow" method="post">
+    <label for="film">Select Film</label>
+    <select name="film" id="film">
+        <% while (iterator2>=0) { %>
+            <option value="<%=films[iterator2].Film_ID %>"><%=films[iterator2--].Title%></option>
+        <%} %>
+    </select>
+    <label for="showType">Select Show Type</label>
+    <select name="showType" id="showType">
+        <% while (iterator>=0) { %>
+            <option value="<%=showTypes[iterator].Show_Type_ID %>"><%=showTypes[iterator--].Show_Type%></option>
+        <%} %>
+    </select>
+    <label for="screen">Select Screen</label>
+    <select name="screen" id="screen">
+        <% while (iterator1>=0) { %>
+            <option value="<%=screens[iterator1].Screen_ID %>"><%=screens[iterator1--].Screen_Name%></option>
+        <%} %>
+    </select>
+    <label for="showdate">Enter Show Date</label>
+    <input type="date" name="showDate" id="showDate">
+    <label for="startTime">Enter Start Time</label>
+    <input type="text" name="startTime" id="startTime">
+    <button>Submit</button>
+</form>
