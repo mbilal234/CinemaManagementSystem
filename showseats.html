@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="showseats.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="show_screen">
+        <div>
+            <img class="screen" src="./images/screen.svg" />
+        </div>
+        <div id="seat-container">
+
+        </div>
+    </div>
+
+    <script>
+        async function retrieveSeats(show_id) {
+            const result = await new Promise((resolve) => {
+                con.query("SELECT * FROM VU_Show_Seats where Show_ID = (?)", [show_id], (err, res) => {
+                    if (err) throw err;
+                    resolve(res);
+                })
+            })
+            return result;
+        }
+
+        const rows = 5;
+        const columns = 20;
+
+        var img = document.createElement('img');
+        img.classList.add();
+        img.src = "./images/seat.svg";
+
+        var container = document.getElementById('seat-container');
+        document.getElementById('seat-container').style.gridTemplateColumns = "repeat(columns + 2, 1fr)";
+        document.getElementById('seat-container').style.gridTemplateRows = "repeat(rows, 1fr)";
+        
+        const result = await retrieveSeats(show_id);
+        for (var seat: seats) {
+            var di = document.createElement('div');
+
+            di.appendChild(img);
+            document.getElementById('seat-container').appendChild(div);
+        di.style.gridRow = seat;
+        di.style.gridColumn = seat[2];
+        }
+    </script>
+
+
+</body>
+
+</html>

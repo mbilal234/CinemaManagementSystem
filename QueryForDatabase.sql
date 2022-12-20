@@ -197,3 +197,12 @@ SELECT * FROM Films f WHERE CURRENT_DATE() < f.Start_Date;
 -- JOIN res_seats rs USING (Res_ID)
 -- JOIN orders o USING (Res_ID)
 -- GROUP BY MONTH(st.Show_Date), YEAR(st.Show_Date);
+
+CREATE OR REPLACE VIEW `VU_Show_Seats` AS
+SELECT seats.Seat_ID, seats.Pos_X, seats.Pos_Y, seats.Seat_Number, seat_types.Seat_Type_ID, res_seats.Res_ID
+FROM Showtimes 
+JOIN Screens USING (Screen_ID) 
+JOIN Show_Types USING (Show_Type_ID) 
+JOIN Seats USING (Screen_ID)
+JOIN Seat_Types USING (Seat_Type_ID) 
+LEFT JOIN Res_Seats USING (Seat_ID);

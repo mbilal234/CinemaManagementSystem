@@ -1,0 +1,7 @@
+#seat-container {
+    display: grid;
+}
+
+.screen {
+    max-width: 70vw;
+}
