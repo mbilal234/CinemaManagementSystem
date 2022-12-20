@@ -1,96 +1,48 @@
- .u-section-1 {
-  background-image: linear-gradient(0deg, rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url("images/32568261-0.jpeg");
-  background-position: 50% 50%;
+/* external css: flickity.css */
+
+* {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-.u-section-1 .u-sheet-1 {
-  min-height: 648px;
+body { font-family: sans-serif; }
+
+.gallery {
+  background: #EEE;
+  width: 70vw;
+  padding: 10px;
 }
 
-.u-section-1 .u-layout-wrap-1 {
-  margin-top: 139px;
-  margin-bottom: 60px;
+.gallery-cell.is-selected {
+  background: rgb(121, 93, 198);
 }
 
-.u-section-1 .u-layout-cell-1 {
-  min-height: 401px;
+.gallery-cell {
+  width: 50%;
+  height: 300px;
+  margin-right: 10px;
+  background: rgb(199, 69, 255);
+  counter-increment: gallery-cell;
 }
 
-.u-section-1 .u-container-layout-1 {
-  padding: 30px;
+/* cell number */
+.gallery-cell:before {
+  display: block;
+  text-align: center;
+  content: counter(gallery-cell);
+  line-height: 300px;
+  font-size: 80px;
+  color: white;
 }
 
-.u-section-1 .u-text-1 {
-  font-size: 2.25rem;
-  font-weight: 700;
-  margin: 0;
+#blank {
+  max-width: 100%;
+  height: 150px;
 }
 
-.u-section-1 .u-text-2 {
-  font-size: 1rem;
-  line-height: 2;
-  margin: 20px 0 0;
-}
-
-.u-section-1 .u-layout-cell-2 {
-  min-height: 401px;
-}
-
-.u-section-1 .u-container-layout-2 {
-  padding: 30px;
-}
-
-.u-section-1 .u-text-3 {
-  font-size: 1rem;
-  line-height: 2;
-  font-weight: 700;
-  margin: 0;
-}
-
-@media (max-width: 1199px) {
-  .u-section-1 .u-sheet-1 {
-    min-height: 684px;
-  }
-
-  .u-section-1 .u-layout-cell-1 {
-    min-height: 331px;
-  }
-
-  .u-section-1 .u-layout-cell-2 {
-    min-height: 331px;
-  }
-}
-
-@media (max-width: 991px) {
-  .u-section-1 .u-sheet-1 {
-    min-height: 324px;
-  }
-
-  .u-section-1 .u-layout-cell-1 {
-    min-height: 100px;
-  }
-
-  .u-section-1 .u-container-layout-1 {
-    padding-left: 10px;
-    padding-right: 10px;
-  }
-
-  .u-section-1 .u-layout-cell-2 {
-    min-height: 100px;
-  }
-
-  .u-section-1 .u-container-layout-2 {
-    padding-right: 10px;
-    padding-left: 11px;
-  }
-}
-
-@media (max-width: 767px) {
-  .u-section-1 .u-sheet-1 {
-    min-height: 424px;
-  }
-
-  .u-section-1 .u-container-layout-2 {
-    padding-left: 10px;
-  }
+#main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }

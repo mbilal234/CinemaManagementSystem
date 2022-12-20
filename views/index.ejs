@@ -8,7 +8,8 @@
 <link id="u-page-google-font" rel="stylesheet"
   href="https://fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i">
 
-
+<link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
+<script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
 <script type="application/ld+json">{
 		"@context": "http://schema.org",
 		"@type": "Organization",
@@ -22,52 +23,41 @@
 </head>
 
 <body class="u-body u-xl-mode" data-lang="en">
-
   <%- include('partials/navbar') %>
-  <script>document.getElementById("home").className="nav-link active"</script>
-  <script>document.getElementById("about").className="nav-link"</script>
-  <script>document.getElementById("contact").className="nav-link"</script>
-  <script>document.getElementById("signin").className="nav-link"</script>
+    <script>document.getElementById("home").className = "nav-link active"</script>
+    <script>document.getElementById("about").className = "nav-link"</script>
+    <script>document.getElementById("contact").className = "nav-link"</script>
+    <script>document.getElementById("signin").className = "nav-link"</script>
 
-    <section class="u-clearfix u-image u-shading u-section-1" id="carousel_9fe7" data-image-width="5616"
-      data-image-height="3744">
-      <div class="u-clearfix u-sheet u-sheet-1">
-        <div class="u-clearfix u-expanded-width u-gutter-30 u-layout-wrap u-layout-wrap-1">
-          <div class="u-gutter-0 u-layout">
-            <div class="u-layout-row">
-              <div class="u-container-style u-layout-cell u-shape-rectangle u-size-23 u-layout-cell-1">
-                <div
-                  class="u-border-20 u-border-palette-4-base u-container-layout u-valign-middle u-container-layout-1">
-                  <h5 class="u-custom-font u-font-montserrat u-text u-text-1">ABA CINEMA</h5>
-                  <p class="u-text u-text-2">The ABA Cinema prides itself on being a multi-city state-of-the-art 3-D
-                    cinema, the first of its kind,<br> guaranteeing a complete movie
-                    experience from the vintage architectural expression of the
-                    Roman Colosseum<br> to the enchanting ambiance within.
-                  </p>
-                </div>
-              </div>
-              <div class="u-container-style u-layout-cell u-shape-rectangle u-size-37 u-layout-cell-2">
-                <div class="u-container-layout u-valign-middle u-container-layout-2">
-                  <p class="u-text u-text-3">ABA cinemas are equipped with Barco DP4K projector, the brightest projector
-                    in the world, silver screen and 7.1 channel digital QSC sound. The premiere hall has a
-                    theater-like-feel housing more than 200 seats along with VIP boxes having 6 Lay-Z boy recliners
-                    each.
-                    <br>
-                    <br>
-                    Our concession area contains a variety of delicious items to choose from. From the traditional
-                    popcorn and nachos deals to various hot and cold beverages, we have it all. Now enjoy the greatest
-                    food, drink and movie, all in one place.
-                    <br>
-                    <br>
-                    The ABA meets the highest benchmark in services and customer care making sure every moment you spend
-                    here is a moment to remember. Serving exclusive cuisines and delights, lavish waiting areas in the
-                    lobby with a rich aura, your memorable cinematic experience at The ABA eagerly awaits you.<br>
-                    <br>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+    <div id="blank"></div>
+
+    <div id="main">
+      <div id="labelhead">
+        Now Showing
       </div>
-    </section>
+      <div id="now_showing" class="gallery js-flickity" data-flickity-options='{ "wrapAround": true }'></div>
+
+    <script>
+      const numNovies = 7;
+      for (var i = 0; i < numNovies; i++) {
+        var movie = document.createElement("div");
+        movie.className = "gallery-cell";
+        document.getElementById("now_showing").appendChild(movie);
+      }
+    </script>
+
+
+<!-- <div class="movie-grid">
+  <div class="moviethumb">
+      <a href="">
+          <img src="" alt="">
+      </a>
+  </div>
+  <div class="movie-content">
+      <ul>
+          <li><a href="">Movie Title</a></li>
+          <li><a href="">Genre</a></li>
+          <li><a href="">Rating</a></li>
+      </ul>
+  </div>
+</div> -->
