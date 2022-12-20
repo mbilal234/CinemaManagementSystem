@@ -287,6 +287,10 @@ app.get("/showTypes", (req, res) => {
     getShowTypes(res);
 })
 
+app.get("/analytics", (req, res) => {
+    res.render(analytics.ejs);
+})
+
 app.post("/addShowType", (req, res) => {
     addShowType(req, res);
 })

@@ -46,3 +46,12 @@ body { font-family: sans-serif; }
   align-items: center;
   justify-content: center;
 }
+
+#labelhead{
+  font-size: 2.5rem;
+  font-weight: 600;
+  line-height: 5rem;
+  font-family: 'Anton', sans-serif;
+  color: rgb(121, 93, 198);
+  margin-bottom: 0;
+}

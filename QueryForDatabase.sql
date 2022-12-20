@@ -159,30 +159,6 @@ CREATE TABLE `Employee`(
     `HireDate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
--- DELIMITER //
-
--- CREATE FUNCTION TicketCost(stype VARCHAR(2), seats INT, numGlasses INT) RETURNS int DETERMINISTIC
--- BEGIN
--- 	IF stype="2D" THEN
--- 		RETURN 
---     END IF;
-
---   Select current_date()into date2;
---   RETURN year(date2)-year(date1);
--- END 
-
--- //
-
--- DELIMITER ;
-
--- CREATE OR REPLACE VIEW `VU_Reserved_Seats` AS
--- SELECT f.Title, st.Show_Date, st.Start_Time, st.Show_Type, sc.Screen_Name, rs.SeatNum 
--- FROM Films f
--- JOIN ShowTimes st USING (Film_ID)
--- JOIN Screens sc USING (Screen_ID)
--- JOIN Reservations res USING (Show_ID) 
--- JOIN Res_Seats rs USING (Res_ID);
-
 CREATE OR REPLACE VIEW `VU_Now_Showing` AS
 SELECT * FROM Films f WHERE CURRENT_DATE() BETWEEN f.Start_Date AND f.End_Date;
 
@@ -196,8 +172,6 @@ JOIN Seats USING (Seat_ID) JOIN Seat_Types USING (Seat_Type_ID)
 JOIN Screens USING (Screen_ID) JOIN Showtimes USING (Show_ID, Screen_ID) 
 JOIN Show_Types USING (Show_Type_ID) 
 JOIN Ticket_Price USING (Seat_Type_ID, Show_Type_ID);
-
-SELECT MONTH(Res_Time), SUM(Price) + SUM(glasses * 200) FROM VU_Ticket_Sales WHERE YEAR(Res_Time) = 2022 GROUP BY MONTH(Res_Time);
 
 CREATE OR REPLACE VIEW `VU_Show_Seats` AS
 SELECT seats.Seat_ID, seats.Pos_X, seats.Pos_Y, seats.Seat_Number, seat_types.Seat_Type_ID, res_seats.Res_ID

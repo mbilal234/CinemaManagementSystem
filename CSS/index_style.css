@@ -124,3 +124,8 @@ ul:not(.u-unstyled) {
     background-color: rgb(185, 89, 248);
     color: var(--bg-primary);
 }
+
+#blank {
+    max-width: 100%;
+    height: 150px;
+  }
