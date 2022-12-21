@@ -11,83 +11,75 @@
 <body>
     <%- include('partials/navbar') %>
 
-    <div class="container mt-5"><h1 class="mb-5 mt-5 mx-auto">Create Show</h1></div>
-        
-    <canvas id="myChart" style="width:100%;max-width:700px"></canvas>
+        <div class="container mt-5">
+            <h1 class="mb-5 mt-5 mx-auto">Analytics</h1>
+        </div>
 
-    <script>
-        var mysql = require('mysql');
+        <form action="">
+            <label for="year">Year</label>
+            <input type="number" name="year" id="year" class="form-control" required>
+            <button class="btn btn-primary mt-3" onClick="updateData()">Submit</button>
+        </form>
 
-        var con = mysql.createConnection({
-            host: "localhost",
-            user: "root",
-            password: "abdularham123",
-            database: "cinema",
-            insecureAuth: true
-        });
+        <canvas id="myChart" style="width:100%;max-width:700px"></canvas>
 
-        async function viewTicketSales(year) {
-            const result = await new Promise((resolve) => {
-                con.query("SELECT MONTHNAME(Res_Time) sales_month, SUM(Price) + SUM(glasses * 200) sales FROM VU_Ticket_Sales WHERE YEAR(Res_Time) = (?) GROUP BY MONTHNAME(Res_Time) ORDER BY MONTH(Res_Time)", [year], (err, res) => {
-                    if (err) throw err;
-                    resolve(res);
-                })
-            })
-            return result;
-        }
+        <script>
+            function updateData() {
+                console.log("update Entered")
+                var barvalues = [["January", "200"]];
+                var xValues = [];
+                var yValues = [];
+                barvalues.forEach(function (value) {
+                    xValues.push(value[0]);
+                    yValues.push(value[1]);
+                });
+                var barColors = "blue";
 
-        const values = viewTicketSales(2022);
-        var xValues = [];
-        var yValues = [];
-        values.forEach(function (value) {
-            xValues.push(value[0]);
-            yValues.push(value[1]);
-        });
-        var barColors = "blue";
-
-        new Chart("myChart", {
-            type: "bar",
-            data: {
-                labels: xValues,
-                datasets: [{
-                    backgroundColor: barColors,
-                    data: yValues
-                }]
-            },
-            options: {
-                responsive: true,
-                legend: {
-                    position: 'bottom',
-                },
-                hover: {
-                    mode: 'label'
-                },
-                scales: {
-                    xAxes: [{
-                        display: true,
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Month'
-                        }
-                    }],
-                    yAxes: [{
-                        display: true,
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Sales (Rs.)'
+                new Chart("myChart", {
+                    type: "bar",
+                    data: {
+                        labels: xValues,
+                        datasets: [{
+                            backgroundColor: barColors,
+                            data: yValues
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        legend: {
+                            position: 'bottom',
                         },
-                        ticks: {
-                            beginAtZero: true,
+                        hover: {
+                            mode: 'label'
+                        },
+                        scales: {
+                            xAxes: [{
+                                display: true,
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'Month'
+                                }
+                            }],
+                            yAxes: [{
+                                display: true,
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'Sales (Rs.)'
+                                },
+                                ticks: {
+                                    beginAtZero: true,
+                                }
+                            }]
+                        },
+                        title: {
+                            display: true,
+                            text: "Monthly Ticket Sales"
                         }
-                    }]
-                },
-                title: {
-                    display: true,
-                    text: "Monthly Ticket Sales"
-                }
+                    }
+                });
             }
-        });
-    </script>
+
+        </script>
 </body>
 
 </html>

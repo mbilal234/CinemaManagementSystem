@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="../CSS/nicepage.css" media="screen">
 <link rel="stylesheet" href="../CSS/Home.css" media="screen">
+<link rel="stylesheet" href="../CSS/moviecard.css">
 <script class="u-script" type="text/javascript" src="../JS/jquery.js" defer=""></script>
 <script class="u-script" type="text/javascript" src="../JS/nicepage.js" defer=""></script>
 <meta name="generator" content="Nicepage 5.0.7, nicepage.com">
@@ -18,7 +19,9 @@
 		"sameAs": []
 }</script>
 
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
 <meta name="theme-color" content="#478ac9">
 <meta property="og:title" content="Home">
 <meta property="og:type" content="website">
@@ -37,27 +40,45 @@
       </div>
       <div id="now_showing" class="gallery js-flickity" data-flickity-options='{ "wrapAround": true }'></div>
 
-    <script>
-      const numNovies = 7;
-      for (var i = 0; i < numNovies; i++) {
-        var movie = document.createElement("div");
-        movie.className = "gallery-cell";
-        document.getElementById("now_showing").appendChild(movie);
-      }
-    </script>
+      <script>
+        const numNovies = 7;
+        for (var i = 0; i < numNovies; i++) {
+          var movie = document.createElement("div");
+          movie.classList.add("gallery-cell", "movie-card");
+          movie.innerHTML += `
+        <div class="moviethumb">
+          <a href="">
+            <img class="moviecover"
+              src="../images/9cc20ec27e262e6b503db2b8e39e451b26e4ffe864a96292684a582de300ba4ec24c3f37915c2a545a16a3f3fd9ee9180ea892e5e33d5c330d3bc9_1280.jpg"
+              alt="">
+          </a>
+        </div>
+        <div class="movie-content">
+          <div class="title">Movie Title</div>
+          <ul>
+            <li><a href="">Genre</a></li>
+            <li><a href="">Rating</a></li>
+          </ul>
+        </div>
+          `;
+          document.getElementById("now_showing").appendChild(movie);
+        }
+      </script>
 
 
-<!-- <div class="movie-grid">
-  <div class="moviethumb">
-      <a href="">
-          <img src="" alt="">
-      </a>
-  </div>
-  <div class="movie-content">
-      <ul>
-          <li><a href="">Movie Title</a></li>
-          <li><a href="">Genre</a></li>
-          <li><a href="">Rating</a></li>
-      </ul>
-  </div>
-</div> -->
+      <!-- <div class="movie-card">
+        <div class="moviethumb">
+          <a href="">
+            <img class="moviecover"
+              src="../images/9cc20ec27e262e6b503db2b8e39e451b26e4ffe864a96292684a582de300ba4ec24c3f37915c2a545a16a3f3fd9ee9180ea892e5e33d5c330d3bc9_1280.jpg"
+              alt="">
+          </a>
+        </div>
+        <div class="movie-content">
+          <div class="title">Movie Title</div>
+          <ul>
+            <li><a href="">Genre</a></li>
+            <li><a href="">Rating</a></li>
+          </ul>
+        </div>
+      </div> -->

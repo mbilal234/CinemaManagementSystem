@@ -13,27 +13,27 @@ body { font-family: sans-serif; }
   padding: 10px;
 }
 
-.gallery-cell.is-selected {
+/* .gallery-cell.is-selected {
   background: rgb(121, 93, 198);
-}
+} */
 
 .gallery-cell {
   width: 50%;
   height: 300px;
   margin-right: 10px;
-  background: rgb(199, 69, 255);
+  /* background: rgb(199, 69, 255); */
   counter-increment: gallery-cell;
 }
 
 /* cell number */
-.gallery-cell:before {
+/* .gallery-cell:before {
   display: block;
   text-align: center;
   content: counter(gallery-cell);
   line-height: 300px;
   font-size: 80px;
   color: white;
-}
+} */
 
 #blank {
   max-width: 100%;
