@@ -7,33 +7,19 @@
 
 body { font-family: sans-serif; }
 
-.gallery {
+.carousel {
   background: #EEE;
   width: 70vw;
   padding: 10px;
 }
 
-/* .gallery-cell.is-selected {
-  background: rgb(121, 93, 198);
-} */
-
-.gallery-cell {
-  width: 50%;
-  height: 300px;
+.carousel-cell {
+  width: 18rem;
+  height: auto;
   margin-right: 10px;
-  /* background: rgb(199, 69, 255); */
+  border-radius: 20px;
   counter-increment: gallery-cell;
 }
-
-/* cell number */
-/* .gallery-cell:before {
-  display: block;
-  text-align: center;
-  content: counter(gallery-cell);
-  line-height: 300px;
-  font-size: 80px;
-  color: white;
-} */
 
 #blank {
   max-width: 100%;

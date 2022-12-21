@@ -5,13 +5,15 @@ USE Cinema;
     
 CREATE TABLE `Films`(
     `Film_ID` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `TMDB_ID` INT UNSIGNED UNIQUE,
     `Title` VARCHAR(255) NOT NULL,
     `Genres` VARCHAR(30), 
     `Description` VARCHAR(255) NOT NULL,
     `Trailer_Link` VARCHAR(255),
     `Run_Time` INT UNSIGNED,
     `Rating` FLOAT UNSIGNED,
-    `Cover_Img` BLOB,
+    `Poster` BLOB,
+    `Backdrop` BLOB,
     `Start_Date` DATE NOT NULL,
     `End_Date` DATE,
     CHECK (Rating <= 10)
