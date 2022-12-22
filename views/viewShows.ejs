@@ -1,8 +1,13 @@
-<h1>All the Planned Shows of <%= title %></h1>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  </head>  
 <% while (iterator >=0){ %>
-    <h2><%= result[iterator].Show_Type %></h2>
-    <h2><%= result[iterator].Show_Date %></h2>
-    <h2><%= result[iterator].Start_Time %></h2>
-    <h2>Payment will be made By easypaisa</h2>
-    <a href="\bookTicket\<%= result[iterator--].Show_ID %>"><button>Book</button></a>
-<% } %>
+    <div class="card">
+      <h2 class="card-title"><%= result[iterator].Show_Type %></h2>
+      <h2 class="card-subtitle"><%= result[iterator].Show_Date %></h2>
+      <h2 class="card-subtitle"><%= result[iterator].Start_Time %></h2>
+      <p class="card-text">Payment will be made By easypaisa</p>
+      <a href="\bookTicket\<%= result[iterator--].Show_ID %>"><button class="btn btn-primary">Book</button></a>
+    </div>
+  <% } %>
+  
