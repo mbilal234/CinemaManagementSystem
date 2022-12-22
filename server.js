@@ -11,8 +11,6 @@ let verificationCode;
 let userEmail;
 let response;
 
-const adminKey = "CoolAshhub";
-
 let emailLoggedIn;
 
 app.set("view-engine", "ejs");
@@ -27,7 +25,7 @@ var mysql = require('mysql');
 var con = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "308NegraAroyoLane",
+    password: "abdularham123",
     database: "cinema",
     insecureAuth: true
 });
