@@ -231,6 +231,10 @@ app.get("/registerMemberPage", (req, res) => {
     res.render("registerMember.ejs", {message: ""});
 })
 
+app.get("/viewFilm", (req, res) => {
+    res.render("filmDescription.ejs", {message: ""});
+})
+
 app.post("/seeMore", (req, res) => {
     openSeeMore(req.body.someName, res);
 })
