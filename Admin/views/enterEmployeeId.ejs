@@ -1,14 +1,61 @@
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+  integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 <%- include('partials/navbar') %>
-    
-  
-<div class="container mt-5">
-  <h1 class = "mt-5 mb-5">Enter Employee ID</h1>
-  <form action="/getEmployee" method="post">
-    <div class="form-group">
-      <label for="empId">Employee ID</label>
-      <input type="number" name="empId" id="empId" class="form-control">
-    </div>
-    <button class="btn btn-primary">Submit</button>
-  </form>
-</div>
+
+
+  <div class="container mt-5">
+    <%= message %>
+    <h1 class="mt-5 mb-5">Enter Employee ID</h1>
+    <form action="/getEmployee" method="post">
+      <div class="form-group">
+        <label for="empId">Employee ID</label>
+        <input type="number" name="empId" id="empId" class="form-control">
+      </div>
+      <button class="btn btn-primary">Submit</button>
+    </form>
+    <table>
+      <thead>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email Address</th>
+        <th>Phone Number</th>
+        <th>CNIC Number</th>
+        <th>Job</th>
+        <th>Hire Date</th>
+      </thead>
+      <tbody>
+        <% while (iterator >= 0){ %>
+          <tr id="<% result[iterator].Emp_ID %>">
+            <td>
+             <%= result[iterator].Emp_ID %>
+            </td>
+            <td>
+              <%= result[iterator].fName+" "+result[iterator].lName %>
+            </td>
+            <td>
+              <%= result[iterator].Email %>
+            </td>
+            <td>
+              <a><%= result[iterator].Phone %></a>
+            </td>
+            <td>
+              <%= result[iterator].CNIC %>
+            </td>
+            <td>
+              <%= result[iterator].JobTitle %>
+            </td>
+            <td>
+              <%= result[iterator--].HireDate %>
+            </td>
+          </tr>
+          <% } %>
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    function buttonClick(){
+      console.log(result);  
+      alert("Hello World");
+    }
+  </script>

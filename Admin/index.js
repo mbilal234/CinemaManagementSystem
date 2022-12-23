@@ -11,13 +11,14 @@ var mysql = require('mysql');
 var con = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "308NegraAroyoLane",
+    password: "abdularham123",
     database: "cinema",
     insecureAuth: true
 });
 
 const ticketType = ["2D", "3D"];
 const price = [500, 800];
+const ticketIterator = ticketType.length;
 
 function insertFilm(res, title, genre, desc_, run_time, rating, cover_img, start_date, end_date) {
     // film_id = parseInt(film_id);
@@ -31,10 +32,11 @@ function insertFilm(res, title, genre, desc_, run_time, rating, cover_img, start
     con.query("insert into films (title, genres, description, run_time, rating, cover_img, start_date, end_date) values (?)", values, (err, result) => {
         if (err) {
             console.log(err)
-            res.send("Could Not Insert The Film");
+            res.render("insertFilm.ejs", {message: "Some Problem Ocurred"});
+        }else{
+            res.render("insertFilm.ejs", {message: "Film Inserted"});
         }
         console.log(result);
-        res.send("Film Inserted");
     })
 
 }
@@ -84,8 +86,11 @@ function addScreen(req, res) {
     console.log(req.body.screenName);
     console.log(req.body.capacity);
     con.query("insert into screens (screen_name, capacity) values (?)", values, (err, result) => {
-        if (err) throw err;
-        res.send("New Screen Added");
+        if (err){
+            res.render("newScreen.ejs", {message: "Some Problem Ocurred"})
+        }else{
+            res.render("newScreen.ejs", {message: "New Screen Registred"});
+        }
     })
 }
 
@@ -95,46 +100,74 @@ async function addEmployee(req, res) {
     const cnicNumber = parseInt(req.body.cnic);
     var values = [[req.body.firstName, req.body.lastName, req.body.email, phoneNumber, cnicNumber, hashedPassword, req.body.jobTitle, new Date()]]
     con.query("insert into employee (fname, lname, email, phone, cnic, password, jobtitle, hiredate) values (?)", values, (err, result) => {
-        if (err) throw err;
-        res.send("New Employee Added");
+        if (err){
+            res.render("enterEmployee.ejs", {message: "Some Problem Ocurred"});
+        }else{
+            res.render("enterEmployee.ejs", {message: "New Employee Registered"});
+        }
     })
+}
+
+async function getAllEmployees(res, message){
+    const result = await new Promise((resolve) => {
+        con.query("SELECT * FROM employee", (err, res) => {
+            if (err) throw err;
+            resolve(res);
+        })
+    })
+    console.log(result);
+    let iterator = result.length-1;
+    // while(iterator>=0){
+    //     console.log(result[iterator].Emp_ID);
+    //     console.log(result[iterator].fName+" "+result[iterator].lName);
+    //     console.log(result[iterator--].JobTitle);
+    // }
+    res.render("enterEmployeeId.ejs", {result, iterator, message})
 }
 
 async function getEmployee(req, res) {
     const idGiven = req.body.empId;
-    const result = await new Promise((resolve) => {
+    let result = await new Promise((resolve) => {
         con.query("SELECT * FROM employee where Emp_ID = (?)", [idGiven], (err, res) => {
             if (err) throw err;
             resolve(res);
         })
     })
     if (!result) {
-        return res.send("No Employee Available with this id");
+        return res.render("enterEmployeeId.ejs", {result, iterator, message:"No Employee Available with this ID"});
     }
-    res.render("employeeInfo.ejs", { name: result[0].fName + " " + result[0].lName, email: result[0].Email, phone: result[0].Phone, cnic: result[0].CNIC, jobTitle: result[0].JobTitle, hireDate: result[0].HireDate })
+    console.log(idGiven);
+    result = result.filter(()=>{return result[0].Emp_ID==idGiven});
+    console.log(result);
+    const iterator = 0;
+    res.render("enterEmployeeId.ejs", {result, iterator, message:""})
 }
 
 async function insertPrices(req, res) {
     const query = "SELECT * FROM ticket_price where (Show_Type_ID in (select Show_Type_ID from show_types where Show_Type = (?)) and (Seat_Type_ID in (select Seat_Type_ID from seat_types where Type = (?))))";
     const result = await new Promise((resolve) => {
         con.query(query, [req.body.showtype, req.body.seattype], (err, res) => {
-            if (err) throw err;
+            if (err){
+                res.render("prices.ejs", { ticketType, price, iterator, message:"Some Problem Ocurred" });
+            };
             resolve(res);
         })
     })
     if (result.length === 0) {
-        return res.send("No Ticket present with this show and seat type");
+        return res.render("prices.ejs", { ticketType, price, iterator, message:"No Ticket Present with this seat or show type"});
     }
     const data = [req.body.price, req.body.showtype, req.body.seattype];
     const sql = "update ticket_price set Price = (?) where (Show_Type_ID in (select Show_Type_ID from show_types where Show_Type = (?)) and (Seat_Type_ID in (select Seat_Type_ID from seat_types where Type = (?))))";
     con.query(sql, data, (err, result) => {
-        if (err) throw err;
+        if (err){
+            res.render("prices.ejs", { ticketType, price, iterator, message:"Some Problem Ocurred" });
+        };
         console.log("Ok");
     })
-    res.send("Work Done");
+    res.render("prices.ejs", { ticketType, price, iterator, message:"Prices Updated" });
 }
 
-async function getShowTypes(res) {
+async function getShowTypes(res, message) {
     const showTypes = await new Promise((resolve) => {
         con.query("select * from show_types", (err, res) => {
             if (err) throw err;
@@ -142,20 +175,20 @@ async function getShowTypes(res) {
         })
     })
     const iterator = showTypes.length - 1;
-    res.render("showTypes.ejs", { showTypes, iterator });
+    res.render("showTypes.ejs", { showTypes, iterator, message });
 }
 
 async function addShowType(req, res) {
     con.query("insert into show_types (show_type) values (?)", [[req.body.showType]], (err, reso) => {
         if (err) {
-            res.send("Some Problem Occurred")
+            getShowTypes(res, "Some Problem Ocurred");
         } else {
-            res.send("Show Inserted");
+            getShowTypes(res, "New Show Type Created");
         }
     })
 }
 
-async function getSeatTypes(res) {
+async function getSeatTypes(res, message) {
     const seatTypes = await new Promise((resolve) => {
         con.query("select * from seat_types", (err, res) => {
             if (err) throw err;
@@ -163,20 +196,20 @@ async function getSeatTypes(res) {
         })
     })
     const iterator = seatTypes.length - 1;
-    res.render("seatTypes.ejs", { seatTypes, iterator });
+    res.render("seatTypes.ejs", { seatTypes, iterator, message });
 }
 
 async function addSeatType(req, res) {
     con.query("insert into seat_types (type) values (?)", [[req.body.seatType]], (err, reso) => {
         if (err) {
-            res.send("Some Problem Occurred")
+            getSeatTypes(res, "Some Problem Ocurred")
         } else {
-            res.send("Seat Inserted");
+            getSeatTypes(res, "New Seat Type Created")
         }
     })
 }
 
-async function createShowPage(req, res) {
+async function createShowPage(req, res, message) {
     const films = await new Promise((resolve) => {
         con.query("select * from films", (err, res) => {
             if (err) throw err;
@@ -198,7 +231,7 @@ async function createShowPage(req, res) {
     const iterator2 = films.length - 1;
     const iterator = showTypes.length - 1;
     const iterator1 = screens.length - 1;
-    res.render("createShow.ejs", { showTypes, iterator, screens, iterator1, films, iterator2 });
+    res.render("createShow.ejs", { showTypes, iterator, screens, iterator1, films, iterator2, message });
 }
 
 async function addShow(req, res) {
@@ -206,13 +239,13 @@ async function addShow(req, res) {
         var values = [[req.body.film, req.body.screen, req.body.showDate, req.body.startTime, req.body.showType]];
         con.query("insert into showtimes (Film_ID, Screen_ID, Show_Date, Start_Time, Show_Type_ID) values (?)", values, (err, reso) => {
             if (err) {
-                res.send("Some Problem Occurred");
+                createShowPage(req, res, "Some Problem Ocurred");
             } else {
-                res.send("Show Added");
+                createShowPage(req, res, "The Show has been scheduled");
             }
         })
     }else{
-        res.send("One of the fields is missing");
+        createShowPage(req, res, "One of the required fields");
     }
 }
 
@@ -242,7 +275,7 @@ app.get("/", (req, res) => {
 })
 
 app.get("/insertFilm", (req, res) => {
-    res.render("insertFilm.ejs");
+    res.render("insertFilm.ejs", {message: ""});
 })
 
 app.post("/insertFilm", (req, res) => {
@@ -258,7 +291,7 @@ app.post("/seeMore", (req, res) => {
 })
 
 app.get("/addScreen", (req, res) => {
-    res.render("newScreens.ejs");
+    res.render("newScreens.ejs", {message: ""});
 })
 
 app.post("/addScreen", (req, res) => {
@@ -266,7 +299,7 @@ app.post("/addScreen", (req, res) => {
 })
 
 app.get("/addEmployee", (req, res) => {
-    res.render("enterEmployee.ejs");
+    res.render("enterEmployee.ejs", {message: ""});
 })
 
 
@@ -275,8 +308,8 @@ app.post("/addEmployee", (req, res) => {
 })
 
 
-app.get("/getEmployee", (req, res) => {
-    res.render("enterEmployeeId.ejs");
+app.get("/viewEmployees", (req, res) => {
+    getAllEmployees(res, "");
 })
 
 app.post("/getEmployee", (req, res) => {
@@ -284,8 +317,7 @@ app.post("/getEmployee", (req, res) => {
 })
 
 app.get("/prices", (req, res) => {
-    const iterator = ticketType.length;
-    res.render("prices.ejs", { ticketType, price, iterator });
+    res.render("prices.ejs", { ticketType, price, ticketIterator, message:"" });
 })
 
 app.post("/updatePrices", (req, res) => {
@@ -293,11 +325,11 @@ app.post("/updatePrices", (req, res) => {
 })
 
 app.get("/createShow", (req, res) => {
-    createShowPage(req, res);
+    createShowPage(req, res, "");
 })
 
 app.get("/showTypes", (req, res) => {
-    getShowTypes(res);
+    getShowTypes(res, "");
 })
 
 app.get("/analytics", (req, res) => {
@@ -309,11 +341,11 @@ app.post("/analytics", (req, res) => {
 })
 
 app.post("/addShowType", (req, res) => {
-    addShowType(req, res);
+    addShowType(req, res, "");
 })
 
 app.get("/seatTypes", (req, res) => {
-    getSeatTypes(res);
+    getSeatTypes(res, "");
 })
 
 app.post("/addSeatType", (req, res) => {

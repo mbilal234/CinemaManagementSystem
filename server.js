@@ -11,8 +11,6 @@ let verificationCode;
 let userEmail;
 let response;
 
-const adminKey = "CoolAshhub";
-
 let emailLoggedIn;
 
 app.set("view-engine", "ejs");
