@@ -317,7 +317,7 @@ app.post("/getEmployee", (req, res) => {
 })
 
 app.get("/prices", (req, res) => {
-    res.render("prices.ejs", { ticketType, price, ticketIterator, message:"" });
+    res.render("prices.ejs", { ticketType, price, iterator: ticketIterator, message:"" });
 })
 
 app.post("/updatePrices", (req, res) => {
