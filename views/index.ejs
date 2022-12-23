@@ -38,70 +38,54 @@
     <div id="main">
       <div id="labelhead">
         Coming Soon
-      </div>~
-      <div id="coming_soon" class="carousel"
-        data-flickity='{ "autoPlay": 2000, "pauseAutoPlayOnHover": true, "groupCells": 2, "adaptiveHeight": true }'></div>
-
-      <script>
-        const numMovies = 8;
-        for (var i = 0; i < numMovies; i++) {
-          var movie = document.createElement("div");
-          movie.classList = ("carousel-cell");
-          movie.innerHTML += `
-        <div class="card" style="width:18rem;">
-      <img class="card-img-top" src="https://image.tmdb.org/t/p/original/pFlaoHTZeyNkG83vxsAJiGzfSsa.jpg"
-        alt="Black Adam">
-      <div class="play--overlay">
-        <div class="play-button"><a class="trailer-link" href="https://www.youtube.com/watch?v=mkomfZHG5q4"
-            target="_blank" class="glightbox_video">
-            <svg width="100" height="100" viewBox="0 0 131 131" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path class="inner-circle"
-                d="M65 21C40.1488 21 20 41.1488 20 66C20 90.8512 40.1488 111 65 111C89.8512 111 110 90.8512 110 66C110 41.1488 89.8512 21 65 21Z"
-                fill="white"></path>
-              <circle class="outer_circle" cx="65.5" cy="65.5" r="64" stroke="white"></circle>
-              <path class="play" fill-rule="evenodd" clip-rule="evenodd" d="M60 76V57L77 66.7774L60 76Z"
-                fill="#BF2428"></path>
-            </svg></a></div>
       </div>
-    </div>
-        `;
-          document.getElementById("coming_soon").appendChild(movie);
-        }
-      </script>
+      <div id="coming_soon" class="carousel" data-flickity='{ "autoPlay": 2000, "pauseAutoPlayOnHover": true, "groupCells": 2, "adaptiveHeight": true }'>
+        <% while (iterator_CS >= 0) { %>
+          <div class="carousel-cell">
+            <div class="card" style="width:18rem;">
+              <img class="card-img-top" src= <%= "https://image.tmdb.org/t/p/original" + CS[iterator_CS].Poster  %> >
+              <div class="play--overlay">
+                <div class="play-button"><a class="trailer-link" href=<%= ""+CS[iterator_CS].Trailer_Link %>
+                    target="_blank" class="glightbox_video">
+                    <svg width="100" height="100" viewBox="0 0 131 131" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path class="inner-circle"
+                        d="M65 21C40.1488 21 20 41.1488 20 66C20 90.8512 40.1488 111 65 111C89.8512 111 110 90.8512 110 66C110 41.1488 89.8512 21 65 21Z"
+                        fill="white"></path>
+                      <circle class="outer_circle" cx="65.5" cy="65.5" r="64" stroke="white"></circle>
+                      <path class="play" fill-rule="evenodd" clip-rule="evenodd" d="M60 76V57L77 66.7774L60 76Z"
+                        fill="#BF2428"></path>
+                    </svg></a></div>
+              </div>
+            </div>
+          </div>
+        <% iterator_CS--; } %>
+      </div>
 
       <div class="showing">
         <div id="labelhead">
           Now Showing
         </div>
-        <div id="now_showing" class="showing-layout"></div>
-
-        <script>
-          const showingMovies = 5;
-          for (var i = 0; i < numMovies; i++) {
-            var movie = document.createElement("div");
-            movie.innerHTML += `
+        <% while (iterator_NS >= 0 && NS[iterator_NS]) { %>
+        <div id="now_showing" class="showing-layout">
           <div class="movie_card" id="ave">
-<div class="info_section">
-  <div class="movie_header">
-    <img class="locandina" src="https://image.tmdb.org/t/p/original/uO2yU3QiGHvVp0L5e5IatTVRkYk.jpg"/>
-    <h1><a href="/viewFilm">Avatar</a></h1>
-    <h4>2022</h4>
-    <span class="minutes">192 min</span>
-    <p class="type">Action, Adventure, Sci-Fi</p>
-  </div>
-  <div class="movie_desc">
-    <p class="text">
-      Set more than a decade after the events of the first film, learn the story of the Sully family (Jake, Neytiri, and their kids), the trouble that follows them, the lengths they go to keep each other safe, the battles they fight to stay alive, and the tragedies they endure.
-    </p>
-  </div>
-</div>
-<div class="blur_back ave_back"></div>
-</div>
-          `;
-            document.getElementById("now_showing").appendChild(movie);
-          }
-        </script>
-
+            <div class="info_section">
+              <div class="movie_header">
+                <img class="locandina" src="https://image.tmdb.org/t/p/original/uO2yU3QiGHvVp0L5e5IatTVRkYk.jpg"/>
+                <h1><a href="/viewFilm"> <%=NS[iterator_NS].Title %> </a></h1>
+                <h4> <%=NS[iterator_NS].Start_Date %> </h4>
+                <span class="minutes"> <%=NS[iterator_NS].Run_Time %> </span>
+                <p class="type"> </p>
+              </div>
+              <div class="movie_desc">
+                <p class="text">
+                  <%=NS[iterator_NS].Description %>
+                </p>
+              </div>
+            </div>
+            <div class="blur_back ave_back"></div>
+            </div>
+        </div>
+        <% iterator_NS--; } %>
 </body>
 
 </html>

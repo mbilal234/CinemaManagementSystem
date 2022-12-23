@@ -205,8 +205,28 @@ async function bookReservation(req, res){
     res.send("Your Booking Is Done and the Payment has been made");
 }
 
+async function Retrieve_Coming_Soon_Now_Showing(req, res){
+    const CS = await new Promise((resolve) => {
+        con.query("SELECT Poster, Trailer_Link FROM VU_Coming_Soon",  (err, reso) => {
+            if (err) throw err;
+            resolve(reso);
+        })
+    })
+    const iterator_CS = CS.length-1;
+
+    const NS = await new Promise((resolve) => {
+        con.query("SELECT Poster, Trailer_Link FROM VU_Now_Showing",  (err, reso) => {
+            if (err) throw err;
+            resolve(reso);
+        })
+    })
+    const iterator_NS = CS.length-1;
+
+    res.render("index.ejs", {CS, iterator_CS, NS, iterator_NS});
+}
+
 app.get("/", (req, res) => {
-    res.render("index.ejs");
+    Retrieve_Coming_Soon_Now_Showing(req, res);
 })
 
 app.get("/about", (req, res) => {
