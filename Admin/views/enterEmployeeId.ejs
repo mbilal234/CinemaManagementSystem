@@ -24,28 +24,29 @@
         <th>Hire Date</th>
       </thead>
       <tbody>
-        <% while (iterator >= 0){ %>
+        <% let i=0 %>
+        <% while (i <= iterator){ %>
           <tr id="<% result[iterator].Emp_ID %>">
             <td>
-             <%= result[iterator].Emp_ID %>
+             <%= result[i].Emp_ID %>
             </td>
             <td>
-              <%= result[iterator].fName+" "+result[iterator].lName %>
+              <%= result[i].fName+" "+result[i].lName %>
             </td>
             <td>
-              <%= result[iterator].Email %>
+              <%= result[i].Email %>
             </td>
             <td>
-              <a><%= result[iterator].Phone %></a>
+              <a><%= result[i].Phone %></a>
             </td>
             <td>
-              <%= result[iterator].CNIC %>
+              <%= result[i].CNIC %>
             </td>
             <td>
-              <%= result[iterator].JobTitle %>
+              <%= result[i].JobTitle %>
             </td>
             <td>
-              <%= result[iterator--].HireDate %>
+              <%= result[i++].HireDate %>
             </td>
           </tr>
           <% } %>
