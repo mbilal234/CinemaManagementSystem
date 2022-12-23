@@ -138,9 +138,10 @@
 	 padding: 25px;
 	 height: 40%;
 }
- .movie_card .info_section .movie_header h1 {
+ .movie_card .info_section .movie_header h1 a {
 	 color: #fff;
 	 font-weight: 400;
+	 text-decoration: none;
 }
  .movie_card .info_section .movie_header h4 {
 	 color: #9ac7fa;

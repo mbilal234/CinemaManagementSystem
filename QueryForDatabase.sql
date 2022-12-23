@@ -7,7 +7,7 @@ CREATE TABLE `Films`(
     `Film_ID` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     `TMDB_ID` INT UNSIGNED UNIQUE,
     `Title` VARCHAR(255) NOT NULL, 
-    `Description` VARCHAR(255) NOT NULL,
+    `Description` VARCHAR(512) NOT NULL,
     `Trailer_Link` VARCHAR(255),
     `Run_Time` INT UNSIGNED,
     `Rating` FLOAT UNSIGNED,

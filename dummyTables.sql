@@ -1,12 +1,9 @@
-drop table dummy_films;
-create table dummy_films(
-film_id int,
-title varchar(255),
-genre varchar(30),
-desc_ varchar(255),
-run_time int,
-rating float,
-cover_img blob,	
-start_date date,
-end_date date
-)
+INSERT INTO films (TMDB_ID, Title, Description, Trailer_Link, Poster, Backdrop, Start_Date, End_Date) VALUES 
+(436270, "Black Adam", "Nearly 5,000 years after he was bestowed with the almighty powers of the Egyptian gods—and imprisoned just as quickly—Black Adam is freed from his earthly tomb, ready to unleash his unique form of justice on the modern world.", "https://www.youtube.com/watch?v=mkomfZHG5q4", "/pFlaoHTZeyNkG83vxsAJiGzfSsa.jpg", "/bQXAqRx2Fgc46uCVWgoPz5L5Dtr.jpg", "2022-10-19", "2022-12-31"),
+(315162, "Puss In Boots", "Puss in Boots discovers that his passion for adventure has taken its toll: He has burned through eight of his nine lives, leaving him with only one life left. Puss sets out on an epic journey to find the mythical Last Wish and restore his nine lives.", "https://youtu.be/tHb7WlgyaUc", "/1NqwE6LP9IEdOZ57NCT51ftHtWT.jpg", "/vNuHqmOJRQXY0PBd887DklSDlBP.jpg", "2022-12-07", "2023-02-10"),
+(1058949, "Little Dixie", "Erstwhile Special Forces operative Doc Alexander is asked to broker a truce with the Mexican drug cartel in secrecy. When Oklahoma Governor Richard Jeffs celebrates the execution of a high-ranking cartel member on TV, his Chief of Staff and Doc inform him about the peace he just ended. But it’s too late, as Cuco, the cartel’s hatchet man, has set his vengeful sights on Doc’s daughter Dixie.", "https://www.youtube.com/watch?v=yqCk_HSBFOQ", "/eU85DLyyhS1SnmOU9mZPb8mt1mo.jpg", "/8oucH52ZI2ehuHlqGnRshhuP17n.jpg", "2023-02-03", NULL),
+(536554, "M3GAN", "A brilliant toy company roboticist uses artificial intelligence to develop M3GAN, a life-like doll programmed to emotionally bond with her newly orphaned niece. But when the doll's programming works too well, she becomes overprotective of her new friend with terrifying results.", "https://www.youtube.com/watch?v=OoDHM_A1axc", "/vwDh6Mnc4iaZu8L2Ffvfzmsqeu2.jpg", "/7HqxI1IXMloT9VTSuDC8ikaj810.jpg", "2022-12-29", NULL),
+(830784, "Lyle, Lyle, Crocodile", "When the Primm family moves to New York City, their young son Josh struggles to adapt to his new school and new friends. All of that changes when he discovers Lyle — a singing crocodile who loves baths, caviar and great music — living in the attic of his new home. But when Lyle’s existence is threatened by evil neighbor Mr. Grumps, the Primms must band together to show the world that family can come from the most unexpected places.", "https://www.youtube.com/watch?v=kSHecHtkXAc", "/irIS5Tn3TXjNi1R9BpWvGAN4CZ1.jpg", "/c1bz69r0v065TGFA5nqBiKzPDys.jpg", "2022-10-07", "2022-12-20"),
+(937278, "A Man Called Otto", "The story of Otto Anderson, a grumpy widower who is very set in his ways. When a lively young family moves in next door, he meets his match in quick-witted and very pregnant Marisol, leading to an unlikely friendship that will turn his world upside-down.", "https://www.youtube.com/watch?v=eFYUX9l-m5I", "/lltnxfKikNH91poAR2BTi8f1UGj.jpg", "/h8x3O4rqNyTfUtaYBaUj96UEv66.jpg", "2022-12-28", NULL),
+(646389, "The Plane", "After a heroic job of successfully landing his storm-damaged aircraft in a war zone, a fearless pilot finds himself between the agendas of multiple militias planning to take the plane and its passengers hostage.", "https://www.youtube.com/watch?v=M25zXBIUVr0", "/3Cd2xJ7Iasbtp5i9ofViMBLG3gw.jpg", "/9Rq14Eyrf7Tu1xk0Pl7VcNbNh1n.jpg", "2023-01-13", NULL);
+(646389, "The Plane", "After a heroic job of successfully landing his storm-damaged aircraft in a war zone, a fearless pilot finds himself between the agendas of multiple militias planning to take the plane and its passengers hostage.", "https://www.youtube.com/watch?v=M25zXBIUVr0", "/3Cd2xJ7Iasbtp5i9ofViMBLG3gw.jpg", "/9Rq14Eyrf7Tu1xk0Pl7VcNbNh1n.jpg", "2023-01-13", NULL);

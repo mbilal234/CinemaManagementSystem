@@ -39,13 +39,14 @@
       <div id="labelhead">
         Coming Soon
       </div>
-      <div id="coming_soon" class="carousel" data-flickity='{ "autoPlay": 2000, "pauseAutoPlayOnHover": true, "groupCells": 2, "adaptiveHeight": true }'>
-        <% while (iterator_CS >= 0) { %>
+      <div id="coming_soon" class="carousel"
+        data-flickity='{ "autoPlay": 2000, "pauseAutoPlayOnHover": true, "groupCells": 3, "adaptiveHeight": true }'>
+        <% while (iterator_CS>= 0) { %>
           <div class="carousel-cell">
             <div class="card" style="width:18rem;">
-              <img class="card-img-top" src= <%= "https://image.tmdb.org/t/p/original" + CS[iterator_CS].Poster  %> >
+              <img class="card-img-top" src=<%="https://image.tmdb.org/t/p/original" + CS[iterator_CS].Poster %> >
               <div class="play--overlay">
-                <div class="play-button"><a class="trailer-link" href=<%= ""+CS[iterator_CS].Trailer_Link %>
+                <div class="play-button"><a class="trailer-link" href=<%="" +CS[iterator_CS].Trailer_Link %>
                     target="_blank" class="glightbox_video">
                     <svg width="100" height="100" viewBox="0 0 131 131" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path class="inner-circle"
@@ -58,34 +59,40 @@
               </div>
             </div>
           </div>
-        <% iterator_CS--; } %>
+          <% iterator_CS--; } %>
       </div>
 
       <div class="showing">
         <div id="labelhead">
           Now Showing
         </div>
-        <% while (iterator_NS >= 0 && NS[iterator_NS]) { %>
-        <div id="now_showing" class="showing-layout">
-          <div class="movie_card" id="ave">
-            <div class="info_section">
-              <div class="movie_header">
-                <img class="locandina" src="https://image.tmdb.org/t/p/original/uO2yU3QiGHvVp0L5e5IatTVRkYk.jpg"/>
-                <h1><a href="/viewFilm"> <%=NS[iterator_NS].Title %> </a></h1>
-                <h4> <%=NS[iterator_NS].Start_Date %> </h4>
-                <span class="minutes"> <%=NS[iterator_NS].Run_Time %> </span>
-                <p class="type"> </p>
-              </div>
-              <div class="movie_desc">
-                <p class="text">
-                  <%=NS[iterator_NS].Description %>
-                </p>
+        <% while (iterator_NS>= 0) { %>
+            <div id="now_showing" class="showing-layout">
+              <div class="movie_card" id="ave">
+                <div class="info_section">
+                  <div class="movie_header">
+                    <img class="locandina" src=<%="https://image.tmdb.org/t/p/original" + NS[iterator_NS].Poster %> />
+                    <h1><a href="/viewFilm">
+                        <%= "" + NS[iterator_NS].Title %>
+                      </a></h1>
+                    <h4>
+                      <%= "" + NS[iterator_NS].Year %>
+                    </h4>
+                    <!-- <span class="minutes"> <%= "" + NS[iterator_NS].Run_Time %> </span> -->
+                    <!-- <p class="type"> </p>  -->
+                  </div>
+                  <div class="movie_desc">
+                    <p class="text">
+                      <%= "" + NS[iterator_NS].Description %>
+                    </p>
+                  </div>
+                </div>
+                <!-- <div> -->
+                  <img class="blur_back" src=<%="https://image.tmdb.org/t/p/original" + NS[iterator_NS].Backdrop %> alt="">
+                <!-- </div> -->
               </div>
             </div>
-            <div class="blur_back ave_back"></div>
-            </div>
-        </div>
-        <% iterator_NS--; } %>
+            <% iterator_NS--; } %>
 </body>
 
 </html>

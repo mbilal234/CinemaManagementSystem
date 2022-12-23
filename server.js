@@ -215,13 +215,12 @@ async function Retrieve_Coming_Soon_Now_Showing(req, res){
     const iterator_CS = CS.length-1;
 
     const NS = await new Promise((resolve) => {
-        con.query("SELECT Poster, Trailer_Link FROM VU_Now_Showing",  (err, reso) => {
+        con.query("SELECT Title, Description, YEAR(Start_Date) AS Year, Trailer_Link, Poster, Backdrop FROM VU_Now_Showing",  (err, reso) => {
             if (err) throw err;
             resolve(reso);
         })
     })
-    const iterator_NS = CS.length-1;
-
+    const iterator_NS = NS.length-1;   
     res.render("index.ejs", {CS, iterator_CS, NS, iterator_NS});
 }
 
