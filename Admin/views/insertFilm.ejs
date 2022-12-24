@@ -1,35 +1,127 @@
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<link rel="stylesheet" href="../CSS/filmCard.css">
+<script src="https://kit.fontawesome.com/bdd89edb33.js"></script>
 <%- include('partials/navbar') %>
 
-<div class ="container mt-5">
-<h4><%= message %></h4>
-<h1 class="mb-5">Enter a New Film</h1>
-<form action="/insertFilm" method="post" class = "form-group">
-    <label for="filmName">Enter Film Name</label>
-    <input type="text" name="filmName" class="form-control" required>
+<body>
+    <div class="page">
+        <form action="/insertFilm">
+            <div class="card-header">
+                <div class="input-group input-group-lg">
+                    <input name="searchQuery" id="searchQuery" type="text" class="form-control form-control-lg rounded" placeholder="Type Keywords"
+                        aria-label="Type Keywords" aria-describedby="basic-addon2" />
+                    <span class="input-group-text border-0" id="basic-addon2"><i class="fas fa-search"></i></span>
+                </div>
+            </div>
+            <div class="card-body p-4">
+                <h6 class="text-muted text-uppercase mt-3 mb-4">ADVANCED SEARCH</h6>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="dropdown">
+                            <a class="btn btn-outline-info btn-lg btn-block dropdown-toggle" href="#" role="button"
+                                id="dropdownMenuLink" data-mdb-toggle="dropdown" aria-expanded="false">
+                                Accessories
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="dropdown">
+                            <a class="btn btn-outline-info btn-lg btn-block dropdown-toggle" href="#" role="button"
+                                id="dropdownMenuLink1" data-mdb-toggle="dropdown" aria-expanded="false">
+                                Color
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink1">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="dropdown">
+                            <a class="btn btn-outline-info btn-lg btn-block dropdown-toggle" href="#" role="button"
+                                id="dropdownMenuLink2" data-mdb-toggle="dropdown" aria-expanded="false">
+                                Size
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink2">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="dropdown">
+                            <a class="btn btn-outline-info btn-lg btn-block dropdown-toggle" href="#" role="button"
+                                id="dropdownMenuLink3" data-mdb-toggle="dropdown" aria-expanded="false">
+                                Sale
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink3">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="dropdown">
+                            <a class="btn btn-outline-info btn-lg btn-block dropdown-toggle" href="#" role="button"
+                                id="dropdownMenuLink4" data-mdb-toggle="dropdown" aria-expanded="false">
+                                Time
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink4">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="dropdown">
+                            <a class="btn btn-outline-info btn-lg btn-block dropdown-toggle" href="#" role="button"
+                                id="dropdownMenuLink5" data-mdb-toggle="dropdown" aria-expanded="false">
+                                Type
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink5">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <p class="text-muted mb-0"><span class="text-info">108 </span>results</p>
+                    <div>
+                        <button type="button" class="btn btn-link text-body" data-mdb-ripple-color="dark">Reset</button>
+                        <!-- <button type="button" class="btn btn-info">Search</button> -->
+                        <input type="submit">
+                    </div>
+                </div>
+            </div>
+        </form>
 
-    <label for="genre">Enter Genre</label>
-    <input type="text" name="genre" class="form-control" required>
-
-    <label for="desc">Enter Description</label>
-    <input type="text" name="desc" class="form-control" required>
-
-    <label for="runTime">Enter Run Time</label>
-    <input type="text" name="runTime" class="form-control" required>
-
-    <label for="rating">Enter Rating</label>
-    <input type="text" name="rating" class="form-control" required>
-
-    <label for="imgUrl">Enter Cover Image Url</label>
-    <input type="file" name="imgUrl" id="imageSelecter" class="form-control-file border" required/>
-
-    <label for="startDate">Enter Start Date</label>
-    <input type="text" name="startDate" class="form-control" required>
-
-    <label for="endDate">Enter End Date</label>
-    <input type="text" name="endDate" class="form-control" required>
-
-    <button class ="btn btn-primary mt-3 mx-auto">Submit</button>
-
-</form>
-</div>
+        <div class="movies">
+            <% let i = 0; %>
+            <% while (i < iterator && result) { %>
+                <% if (result[i].poster_path) { %>
+            <div class="card">
+                <div class="card__face card__face--front">
+                    <img src= <%= "https://image.tmdb.org/t/p/original" + result[i].poster_path %> />
+                </div>
+                <div class="card__face card__face--back">
+                    
+                </div>
+            </div>
+            <% } i++} %>
+        </div>
+    </div>
+</body>  

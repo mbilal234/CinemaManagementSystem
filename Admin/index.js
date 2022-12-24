@@ -3,6 +3,7 @@ const fetch = require("node-fetch");
 const app = express();
 const path = require("path");
 const bodyParser = require('body-parser');
+const TMDB_API = require("./test.js")
 // const mailVerification = require("./JS/emailVerify.js");
 const bcrypt = require('bcrypt');
 
@@ -282,10 +283,6 @@ app.get("/", (req, res) => {
     res.render("index.ejs");
 })
 
-app.get("/insertFilm", (req, res) => {
-    res.render("insertFilm.ejs", {message: ""});
-})
-
 app.post("/insertFilm", (req, res) => {
     insertFilm(res, req.body.filmName, req.body.genre, req.body.desc, req.body.runTime, req.body.rating, req.body.imgUrl, req.body.startDate, req.body.endDate);
 })
@@ -364,6 +361,17 @@ app.post("/addSeatType", (req, res) => {
 app.post("/addShow", (req, res) => {
     addShow(req, res);
 })
+
+app.get("/insertFilm", (req, res) => {
+    TMDB_API.searchMovieResults(req, res);
+})
+
+app.get("/insertFilm/:searchQuery", (req, res) => {
+    console.log(req.params.searchQuery);
+    TMDB_API.searchMovieResults(req, res);
+})
+
+
 
 app.listen(5000, () => {
     console.log("App is listening at port http://localhost:5000");
