@@ -3,71 +3,68 @@
 <body>
     <%- include('partials/navbar') %>
 
-        <div class="movie-card">
+        <div class="movie_card" id="ave">
+            <div class="info_section">
+                <div class="movie_header">
+                    <img class="locandina" src=<%="https://image.tmdb.org/t/p/original" + result[0].Poster %> />
+                    <h1><a href=<%="/viewFilm/" + result[0].TMDB_ID %> data-id= <%= "" + result[0].TMDB_ID %>>
+                                <%= "" + result[0].Title %>
+                        </a></h1>
+                    <!-- <span class="minutes"> <%= "" + result[0].Run_Time %> </span> -->
+                    <!-- <p class="type"> </p>  -->
+                </div>
+                <div class="movie_desc">
+                    <p class="text">
+                        <%= "" + result[0].Description %>
+                    </p>
+                </div>
+            </div>
+            <!-- <div> -->
+            <img class="blur_back" alt="" src= <%="https://image.tmdb.org/t/p/original" + result[0].Backdrop %> >
+            <!-- </div> -->
+        </div>
 
-            <div class="container">
+        <div class="showtimes">
+            <div class="labelhead">
+                Showtimes
+            </div>
+            
+            <div class="tabs">
+                <% const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"]; %>
+                <% let i = 0; %>
+                <% while(i<7) { %>
+                <span data-tab-value= <%= "#" + weekdays[(result[0].Day + i - 1)%7] %> > <%= weekdays[(result[0].Day + i - 1)%7] %> </span>
+                <% i++;} %>
+            </div>
+          
+            <div class="tab-content">
+                <% let j = 0; %>
+                <% while(j < 7) { %>
+                    <% if (j==0) { %>
+                    <div class="tabs__tab active" data-tab-info id= <%= weekdays[(result[0].Day+j-1)%7] %> >
+                        <p> <%= "Content: " + weekdays[(result[0].Day+j-1)%7] %> </p></div>
+                    <% } else { %>
+                    <div class="tabs__tab" data-tab-info id= <%= weekdays[(result[0].Day+j-1)%7] %> >
+                        <p> <%= "Content: " + weekdays[(result[0].Day+j-1)%7] %> </p></div>
+                <% }j++;} %>
+               
+            </div>
+            <script type="text/javascript">
+                const tabs = document.querySelectorAll('[data-tab-value]')
+                const tabInfos = document.querySelectorAll('[data-tab-info]')
+          
+                tabs.forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        const target = document
+                            .querySelector(tab.dataset.tabValue);
+          
+                        tabInfos.forEach(tabInfo => {
+                            tabInfo.classList.remove('active')
+                        })
+                        target.classList.add('active');
+                    })
+                })
+            </script>
+        </div>
 
-                <a href="#"><img class="locandina"
-                        src="https://image.tmdb.org/t/p/original/uO2yU3QiGHvVp0L5e5IatTVRkYk.jpg" alt="cover"
-                        class="cover" /></a>
-
-                <div class="hero">
-
-                    <div class="details">
-
-                        <div class="title1">The Hobbit <span>PG-13</span></div>
-
-                        <div class="title2">The Battle of the Five Armies</div>
-
-                        <fieldset class="rating">
-                            <input type="radio" id="star5" name="rating" value="5" /><label class="full" for="star5"
-                                title="Awesome - 5 stars"></label>
-                            <input type="radio" id="star4half" name="rating" value="4 and a half" /><label class="half"
-                                for="star4half" title="Pretty good - 4.5 stars"></label>
-                            <input type="radio" id="star4" name="rating" value="4" checked /><label class="full"
-                                for="star4" title="Pretty good - 4 stars"></label>
-                            <input type="radio" id="star3half" name="rating" value="3 and a half" /><label class="half"
-                                for="star3half" title="Meh - 3.5 stars"></label>
-                            <input type="radio" id="star3" name="rating" value="3" /><label class="full" for="star3"
-                                title="Meh - 3 stars"></label>
-                            <input type="radio" id="star2half" name="rating" value="2 and a half" /><label class="half"
-                                for="star2half" title="Kinda bad - 2.5 stars"></label>
-                            <input type="radio" id="star2" name="rating" value="2" /><label class="full" for="star2"
-                                title="Kinda bad - 2 stars"></label>
-                            <input type="radio" id="star1half" name="rating" value="1 and a half" /><label class="half"
-                                for="star1half" title="Meh - 1.5 stars"></label>
-                            <input type="radio" id="star1" name="rating" value="1" /><label class="full" for="star1"
-                                title="Sucks big time - 1 star"></label>
-                            <input type="radio" id="starhalf" name="rating" value="half" /><label class="half"
-                                for="starhalf" title="Sucks big time - 0.5 stars"></label>
-                        </fieldset>
-
-                        <span class="likes">109 likes</span>
-
-                    </div> <!-- end details -->
-
-                </div> <!-- end hero -->
-
-                <div class="description">
-
-                    <div class="column1">
-                        <span class="tag">action</span>
-                        <span class="tag">fantasy</span>
-                        <span class="tag">adventure</span>
-                    </div> <!-- end column1 -->
-
-                    <div class="column2">
-
-                        <p>Bilbo Baggins is swept into a quest to reclaim the lost Dwarf Kingdom of Erebor from the
-                            fearsome dragon Smaug. Approached out of the blue by the wizard Gandalf the Grey, Bilbo
-                            finds himself joining a company of thirteen dwarves led by the legendary warrior, Thorin
-                            Oakenshield.</p>
-
-
-                    </div> <!-- end column2 -->
-                </div> <!-- end description -->
-
-
-            </div> <!-- end container -->
-        </div> <!-- end movie-card -->
 </body>

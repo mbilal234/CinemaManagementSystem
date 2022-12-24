@@ -250,16 +250,24 @@ async function addShow(req, res) {
 }
 
 async function viewTicketSales(req, res) {
-    console.log("Entered ViewTicketSales");
-    const year = req.body.form.year;
-    console.log(year);
+    var year = 0;
+    if (req.body.form) {
+        year = req.body.form.year;
+    }
+    
     const result = await new Promise((resolve) => {
         con.query("SELECT MONTHNAME(Res_Time) sales_month, SUM(Price) + SUM(glasses * 200) sales FROM VU_Ticket_Sales WHERE YEAR(Res_Time) = (?) GROUP BY MONTHNAME(Res_Time) ORDER BY MONTH(Res_Time)", [year], (err, res) => {
             if (err) throw err;
             resolve(res);
         })
     })
-    return [["January", "200"],["February", "100"]];
+    
+    if (!result) {
+        result = [["January", "200"],["February", "100"]];
+    }
+    console.log(result)
+    res.render("analytics.ejs", {result}  );
+    //return ;
 }
 
 app.set("view-engine", "ejs");
@@ -333,11 +341,12 @@ app.get("/showTypes", (req, res) => {
 })
 
 app.get("/analytics", (req, res) => {
-    res.render("analytics.ejs");
+    console.log(req);
+    viewTicketSales(req, res);
 })
 
 app.post("/analytics", (req, res) => {
-    req.body.script.barvalues = viewTicketSales(req, user);
+    viewTicketSales(req, res);
 })
 
 app.post("/addShowType", (req, res) => {

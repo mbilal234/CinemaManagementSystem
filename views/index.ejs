@@ -72,7 +72,7 @@
                 <div class="info_section">
                   <div class="movie_header">
                     <img class="locandina" src=<%="https://image.tmdb.org/t/p/original" + NS[iterator_NS].Poster %> />
-                    <h1><a href="/viewFilm">
+                    <h1><a href= <%= "/viewFilm/" + NS[iterator_NS].TMDB_ID %> data-id= <%= "" + NS[iterator_NS].TMDB_ID %>>
                         <%= "" + NS[iterator_NS].Title %>
                       </a></h1>
                     <h4>

@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 </head>
 
 <body>
@@ -13,74 +14,76 @@
 
         <div class="container mt-5">
             <h1 class="mb-5 mt-5 mx-auto">Analytics</h1>
-        
 
-        <form action="">
-            <label for="year">Year</label>
-            <input type="number" name="year" id="year" class="form-control" required>
-            <button class="btn btn-primary mt-3" onClick="updateData()">Submit</button>
-        </form>
-    </div>
 
-        <canvas id="myChart" style="width:100%;max-width:700px"></canvas>
+            <form action="">
+                <label for="year">Year</label>
+                <input type="number" name="year" id="year" class="form-control" required>
+                <button class="btn btn-primary mt-3" onClick="updateData()">Submit</button>
+            </form>
+        </div>
 
-        <script>
-            function updateData() {
-                console.log("update Entered")
-                var barvalues = [["January", "200"]];
-                var xValues = [];
-                var yValues = [];
-                barvalues.forEach(function (value) {
-                    xValues.push(value[0]);
-                    yValues.push(value[1]);
-                });
-                var barColors = "blue";
+        <canvas id="myChart" style="width:100%;max-width:700px" data-storeIt= <%= '[["January", "200"],["February", "100"]]' %>></canvas>
 
-                new Chart("myChart", {
-                    type: "bar",
-                    data: {
-                        labels: xValues,
-                        datasets: [{
-                            backgroundColor: barColors,
-                            data: yValues
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        legend: {
-                            position: 'bottom',
-                        },
-                        hover: {
-                            mode: 'label'
-                        },
-                        scales: {
-                            xAxes: [{
-                                display: true,
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: 'Month'
-                                }
-                            }],
-                            yAxes: [{
-                                display: true,
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: 'Sales (Rs.)'
-                                },
-                                ticks: {
-                                    beginAtZero: true,
-                                }
+        <% if (result) { %>
+            <script>
+                function updateData() {
+                    console.log("update Entered")
+                    var barvalues = JSON.parse($("#myChart").data("storeIt"));
+                    console.log(barvalues);
+                    var xValues = [];
+                    var yValues = [];
+                    barvalues.forEach(function (value) {
+                        xValues.push(value[0]);
+                        yValues.push(value[1]);
+                    });
+                    var barColors = "blue";
+
+                    new Chart("myChart", {
+                        type: "bar",
+                        data: {
+                            labels: xValues,
+                            datasets: [{
+                                backgroundColor: barColors,
+                                data: yValues
                             }]
                         },
-                        title: {
-                            display: true,
-                            text: "Monthly Ticket Sales"
+                        options: {
+                            responsive: true,
+                            legend: {
+                                position: 'bottom',
+                            },
+                            hover: {
+                                mode: 'label'
+                            },
+                            scales: {
+                                xAxes: [{
+                                    display: true,
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: 'Month'
+                                    }
+                                }],
+                                yAxes: [{
+                                    display: true,
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: 'Sales (Rs.)'
+                                    },
+                                    ticks: {
+                                        beginAtZero: true,
+                                    }
+                                }]
+                            },
+                            title: {
+                                display: true,
+                                text: "Monthly Ticket Sales"
+                            }
                         }
-                    }
-                });
-            }
-
-        </script>
+                    });
+                }
+            </script>
+            <% } %>
 </body>
 
 </html>

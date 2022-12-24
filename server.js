@@ -215,13 +215,24 @@ async function Retrieve_Coming_Soon_Now_Showing(req, res){
     const iterator_CS = CS.length-1;
 
     const NS = await new Promise((resolve) => {
-        con.query("SELECT Title, Description, YEAR(Start_Date) AS Year, Trailer_Link, Poster, Backdrop FROM VU_Now_Showing",  (err, reso) => {
+        con.query("SELECT TMDB_ID, Title, Description, YEAR(Start_Date) AS Year, Trailer_Link, Poster, Backdrop FROM VU_Now_Showing",  (err, reso) => {
             if (err) throw err;
             resolve(reso);
         })
     })
     const iterator_NS = NS.length-1;   
     res.render("index.ejs", {CS, iterator_CS, NS, iterator_NS});
+}
+
+async function retrieveFilmDescription(req, res) {
+    const result = await new Promise((resolve) => {
+        con.query("SELECT TMDB_ID, Title, Description, Poster, Backdrop, DAYOFWEEK(Start_Date) AS Day FROM films where TMDB_ID = (?)", [req.params.id], (err, reso) => {
+            if (err) throw err;
+            resolve(reso);
+        })
+    })
+    console.log(result);
+    res.render("filmDescription.ejs", {result});
 }
 
 app.get("/", (req, res) => {
@@ -248,8 +259,8 @@ app.get("/registerMemberPage", (req, res) => {
     res.render("registerMember.ejs", {message: ""});
 })
 
-app.get("/viewFilm", (req, res) => {
-    res.render("filmDescription.ejs", {message: ""});
+app.get("/viewFilm/:id", (req, res) => {
+    retrieveFilmDescription(req, res);
 })
 
 app.post("/seeMore", (req, res) => {
