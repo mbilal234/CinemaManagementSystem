@@ -3,7 +3,9 @@ const fetch = require("node-fetch");
 const app = express();
 const path = require("path");
 const bodyParser = require('body-parser');
-const TMDB_API = require("./test.js")
+const { MovieDb } = require('moviedb-promise')
+const moviedb = new MovieDb('e9f0a1e64e12aa6748cf8b29b8aa9dcb')
+
 // const mailVerification = require("./JS/emailVerify.js");
 const bcrypt = require('bcrypt');
 
@@ -21,25 +23,44 @@ const ticketType = ["2D", "3D"];
 const price = [500, 800];
 const ticketIterator = ticketType.length;
 
-function insertFilm(res, title, genre, desc_, run_time, rating, cover_img, start_date, end_date) {
-    // film_id = parseInt(film_id);
-    run_time = parseInt(run_time);
-    var values = [[title, genre, desc_, run_time, rating, cover_img, start_date, end_date]];
-    fetch("http://localhost:5000/images/" + cover_img).then((res) => {
-        return res.blob;
-    }).then((blob) => {
-        values[0][5] = blob;
-    });
-    con.query("insert into films (title, genres, description, run_time, rating, cover_img, start_date, end_date) values (?)", values, (err, result) => {
-        if (err) {
-            console.log(err)
-            res.render("insertFilm.ejs", {message: "Some Problem Ocurred"});
-        }else{
-            res.render("insertFilm.ejs", {message: "Film Inserted"});
-        }
-        console.log(result);
-    })
+async function searchMovieResults(req, res) {
+    var iterator = 0;
+    var movies = [];
+    if (req.query.searchQuery) {
+        movies = await moviedb.searchMovie(req.query.searchQuery);
+        iterator = movies.results.length;
+    }
+    
+    const result = movies.results;
+    res.render("insertFilm.ejs", {result, iterator})
+}
 
+async function insertMovie(req, res) {
+    var movies = [];
+    if (req.body.film_id) {
+        movies = await moviedb.movieInfo({id: req.body.film_id} );
+    }
+
+    if (movies) {
+        var values = [[movies.id, movies.title, movies.overview, "", movies.runtime, movies.vote_average, movies.poster_path, movies.backdrop_path, req.body.start_date, req.body.end_date]];
+        con.query("INSERT INTO films VALUES (?)", values, (err, result) => {
+            if (err){  
+                console.error(err);
+            }
+        })
+
+        var genre = [];
+        movies.genres.forEach(element => {
+            genre.push([movies.id, element.name]);
+        });
+        
+        con.query("INSERT INTO genres VALUES ?", [genre], (err, result) => {
+            if (err){  
+                console.error(err);
+            }
+        })
+        searchMovieResults(req, res);
+    }
 }
 
 async function retrieveFilm(film_id) {
@@ -283,10 +304,6 @@ app.get("/", (req, res) => {
     res.render("index.ejs");
 })
 
-app.post("/insertFilm", (req, res) => {
-    insertFilm(res, req.body.filmName, req.body.genre, req.body.desc, req.body.runTime, req.body.rating, req.body.imgUrl, req.body.startDate, req.body.endDate);
-})
-
 app.get("/viewFilms", (req, res) => {
     getOptions(res);
 })
@@ -363,12 +380,16 @@ app.post("/addShow", (req, res) => {
 })
 
 app.get("/insertFilm", (req, res) => {
-    TMDB_API.searchMovieResults(req, res);
+    searchMovieResults(req, res);
 })
 
 app.get("/insertFilm/:searchQuery", (req, res) => {
     console.log(req.params.searchQuery);
-    TMDB_API.searchMovieResults(req, res);
+    searchMovieResults(req, res);
+})
+
+app.post("/insertFilm", (req, res) => {
+    insertMovie(req, res);
 })
 
 

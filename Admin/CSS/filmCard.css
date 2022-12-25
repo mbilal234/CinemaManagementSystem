@@ -2,22 +2,22 @@
 
 .card-header {
     border-bottom: 3px solid #39c0ed;
-  }
-  
-  .form-control {
+}
+
+.form-control {
     border-color: transparent;
-  }
-  
-  .input-group>.form-control:focus {
+}
+
+.input-group>.form-control:focus {
     border-color: transparent;
     box-shadow: inset 0 0 0 1px transparent;
-  }
+}
 
 /* MOVIE CARD CSS */
 .movies {
     display: flex;
     flex-wrap: wrap;
-    
+
     justify-content: center;
     /* align-items: ; */
     margin: 0 auto;
@@ -26,36 +26,146 @@
 }
 
 .card {
-    position: relative;
-    /* width: 240px; */
-    width: 18rem;
-    color: white;
-    cursor: pointer;
-    transition: 1s ease-in-out;
-    transform-style: preserve-3d;
     margin: 10px;
 }
 
-.card:hover {
-    transform: rotateY(0.5turn);
+.card-img-top,
+.card {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 18rem;
 }
 
-.card .card__face {
+.play--overlay {
     position: absolute;
     top: 0;
     left: 0;
-    width: 18rem;
-    backface-visibility: hidden;
-    transition: 1s ease-in-out;
-    -webkit-box-reflect: below 0 linear-gradient(transparent, transparent, rgba(0, 0, 0, 0.4));
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.25s;
+    backdrop-filter: blur(10px);
 }
 
-.card .card__face img {
-    width: 18rem;
-    object-fit: cover;
+.play--overlay>* {
+    transform: translateY(20px);
+    transition: transform 0.25s;
 }
 
-.card .card__face--back {
-    transform: rotateY(0.5turn);
+.card:hover .play--overlay {
+    opacity: 0.9;
+    transition: all 0.5s ease-in-out;
 }
 
+.card:hover .play--overlay>* {
+    transform: translateY(0);
+    transition: all 0.5s ease-in-out;
+}
+
+.card:hover .card-img-top {
+    transform: scale(1.1);
+    transition: all 0.5s ease-in-out;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.content h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    align-items: center;
+    text-align: center;
+}
+
+.addBtn {
+    background-color: #39c0ed;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+/* DETAIL FORM CSS */
+.form-popup {
+    display: none;
+    position: fixed;
+    width: 50%;
+    top: 25%;
+    left: 25%;
+    border: 3px solid #f1f1f1;
+    z-index: 9;
+}
+
+/* Add styles to the form container */
+.form-container {
+    /* max-width: 300px; */
+    padding: 10px;
+    background-color: white;
+    margin: 0;
+}
+
+/* Full-width input fields */
+.form-container input[type=text],
+.form-container input[type=password] {
+    width: 100%;
+    padding: 15px;
+    margin: 5px;
+    border: none;
+    background: #f1f1f1;
+}
+
+/* When the inputs get focus, do something */
+.form-container input[type=text]:focus,
+.form-container input[type=password]:focus {
+    background-color: #ddd;
+    outline: none;
+}
+
+/* Set a style for the submit/login button */
+.form-container .btn {
+    background-color: #04AA6D;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 10px;
+    opacity: 0.8;
+}
+
+/* Add a red background color to the cancel button */
+.form-container .cancel {
+    background-color: red;
+}
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover,
+.open-button:hover {
+    opacity: 1;
+}
+
+.active {
+    display: flex;
+    flex-direction: row;
+}
+
+.inactive {
+    pointer-events: none;
+    filter: blur(8px);
+    opacity: 0.5;
+}
