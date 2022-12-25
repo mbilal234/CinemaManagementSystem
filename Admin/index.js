@@ -4,7 +4,9 @@ const app = express();
 const path = require("path");
 const bodyParser = require('body-parser');
 const { MovieDb } = require('moviedb-promise')
-const moviedb = new MovieDb('e9f0a1e64e12aa6748cf8b29b8aa9dcb')
+const dotenv = require("dotenv");
+dotenv.config();
+const moviedb = new MovieDb(process.env.MOVIE_DB)
 
 // const mailVerification = require("./JS/emailVerify.js");
 const bcrypt = require('bcrypt');
@@ -14,7 +16,7 @@ var mysql = require('mysql');
 var con = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "308NegraAroyoLane",
+    password: process.env.DB_PASSWORD,
     database: "cinema",
     insecureAuth: true
 });
@@ -22,6 +24,9 @@ var con = mysql.createConnection({
 const ticketType = ["2D", "3D"];
 const price = [500, 800];
 const ticketIterator = ticketType.length;
+
+const adminUsername = process.env.ADMIN_USERNAME;
+const adminKey = process.env.ADMIN_KEY;
 
 async function searchMovieResults(req, res) {
     var iterator = 0;
@@ -301,7 +306,15 @@ app.use('/images', express.static('images'));
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get("/", (req, res) => {
-    res.render("index.ejs");
+    res.render("adminLogin.ejs", {message:""});
+})
+
+app.post("/login", (req, res) => {
+    if (req.body.username==adminUsername && req.body.password==adminKey){
+        res.render("index.ejs")
+    }else{
+        res.render("adminLogin.ejs", {message:"Invalid Credentials"});
+    }
 })
 
 app.get("/viewFilms", (req, res) => {

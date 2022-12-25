@@ -5,6 +5,8 @@ const path = require("path");
 const bodyParser = require('body-parser');
 const mailVerification = require("./JS/emailVerify.js");
 const bcrypt = require('bcrypt');
+const dotenv = require("dotenv")
+dotenv.config();
 
 // Variables Required for email verification
 let verificationCode;
@@ -25,7 +27,7 @@ var mysql = require('mysql');
 var con = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "308NegraAroyoLane",
+    password: process.env.DB_PASSWORD,
     database: "cinema",
     insecureAuth: true
 });

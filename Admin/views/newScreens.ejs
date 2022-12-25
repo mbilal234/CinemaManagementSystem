@@ -1,122 +1,125 @@
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 <link rel="stylesheet" href="newScreens.ejs">
 <%- include('partials/navbar') %>
-    
-  
-<div class="container mt-5">
-    <h4><%= message %></h4>
-    <h1 class="mb-5 mt-5 mx-auto">Add Screen</h1>
-  <form action="/addScreen" method="post" class="form-group">
-    <label for="screenName" class="d-block">
-      Screen Name
-      <input type="text" name="screenName" id="screenName" class="form-control" required>
-    </label>
-    <label for="capacity" class="d-block">
-      Capacity
-      <input type="number" min="30" max="100" name="capacity" id="capacity" class="form-control" required>
-    </label>
-    <label for="rows" class="d-block">
-      Rows
-      <input type="number" name="rows" id="rows" class="form-control">
-    </label>
-    <label for="columns" class="d-block">
-      Columns
-      <input type="number" name="rows" id="columns" class="form-control">
-    </label>
-    <div id="seat_container" class="form-group">
-      <span onclick="addSeatType()" class="btn btn-secondary">Add Seat type</span>
+
+
+    <div class="container mt-5">
+        <h4>
+            <%= message %>
+        </h4>
+        <h1 class="mb-5 mt-5 mx-auto">Add Screen</h1>
+        <form action="/addScreen" method="post" class="form-group">
+            <label for="screenName" class="d-block">
+                Screen Name
+                <input type="text" name="screenName" id="screenName" class="form-control" required>
+            </label>
+            <label for="capacity" class="d-block">
+                Capacity
+                <input type="number" min="30" max="100" name="capacity" id="capacity" class="form-control" required>
+            </label>
+            <label for="rows" class="d-block">
+                Rows
+                <input type="number" name="rows" id="rows" class="form-control">
+            </label>
+            <label for="columns" class="d-block">
+                Columns
+                <input type="number" name="rows" id="columns" class="form-control">
+            </label>
+            <div id="seat_container" class="form-group">
+                <span onclick="addSeatType()" class="btn btn-secondary">Add Seat type</span>
+            </div>
+            <button onclick="myFunction()" class="btn btn-primary mt-3">Submit</button>
+        </form>
+
+        <div id="plan" class="seating mt-5">
+        </div>
     </div>
-    <button onclick="myFunction()" class="btn btn-primary mt-3">Submit</button>
-  </form>
-
-  <div id="plan" class="seating mt-5">
-  </div>
-</div>
-<script>
-    function removeActive() {
-        for (var child = document.getElementById("seat_container").firstElementChild; child; child = child.nextElementSibling) {
-            for (var innerchild = child.firstElementChild; innerchild; innerchild = innerchild.nextElementSibling) {
-                if (innerchild.id == "button") {
-                    innerchild.classList.remove('active');
+    <script>
+        function removeActive() {
+            for (var child = document.getElementById("seat_container").firstElementChild; child; child = child.nextElementSibling) {
+                for (var innerchild = child.firstElementChild; innerchild; innerchild = innerchild.nextElementSibling) {
+                    if (innerchild.id == "button") {
+                        innerchild.classList.remove('active');
+                    }
                 }
-            }
-
-        }
-    }
-
-    function addSeatType() {
-        var seat_container = document.getElementById('seat_container');
-        var seat_type = document.createElement('div');
-        seat_type.className = "seat_type";
-        seat_type.id = "seat_type";
-        seat_container.appendChild(seat_type);
-        var seat_type_name = document.createElement('input');
-        seat_type_name.type = "text";
-        seat_type_name.placeholder = "Seat Type";
-        seat_type.appendChild(seat_type_name);
-        var seat_type_price = document.createElement('input');
-        seat_type_price.type = "number";
-        seat_type_price.placeholder = "Price";
-        seat_type.appendChild(seat_type_price);
-        var seat_type_count = document.createElement('input');
-        seat_type_count.type = "number";
-        seat_type_count.placeholder = "Count";
-        seat_type.appendChild(seat_type_count);
-        var seat_type_toggle = document.createElement("button");
-        seat_type_toggle.innerHTML = "Toggle";
-        seat_type_toggle.id = "button";
-        seat_type.appendChild(seat_type_toggle);
-        seat_type_toggle.onclick = function () {
-            if (seat_type_toggle.classList.contains('active')) {
-                seat_type_toggle.classList.remove('active');
-            }
-            else {
-                removeActive();
-                seat_type_toggle.classList.add('active');
 
             }
         }
-        var removeBtn = document.createElement("button");
-        removeBtn.innerHTML = "Remove";
-        removeBtn.id = "removeBtn";
-        seat_type.appendChild(removeBtn);
-        removeBtn.onclick = function () {
-            removeBtn.parentElement.remove();
-        }
-    }
 
-    function myFunction() {
-
-        const container = document.querySelector('#plan');
-        while (container.firstChild) {
-            container.removeChild(container.firstChild);
-        }
-
-
-        var columns = document.getElementById('columns').value;
-        var temp = parseInt(columns) + 2;
-        console.log(temp);
-        var rows = document.getElementById('rows').value;
-        document.getElementById('plan').style.gridTemplateColumns = "repeat(temp, 1fr)";
-        document.getElementById('plan').style.gridTemplateRows = "repeat(rows, 1fr)";
-
-        for (var i = 1; i <= rows; i++) {
-            var k = 1;
-            for (var j = 1; j <= temp; j++) {
-                var div = document.createElement('div');
-                document.getElementById('plan').appendChild(div);
-                div.style.gridRow = i;
-                div.style.gridColumn = j;
-                if (j == Math.round(columns / 4 + 1) || j == Math.round(columns * 3 / 4 + 2)) {
-                    div.className = "empty";
+        function addSeatType() {
+            var seat_container = document.getElementById('seat_container');
+            var seat_type = document.createElement('div');
+            seat_type.className = "seat_type";
+            seat_type.id = "seat_type";
+            seat_container.appendChild(seat_type);
+            var seat_type_name = document.createElement('input');
+            seat_type_name.type = "text";
+            seat_type_name.placeholder = "Seat Type";
+            seat_type.appendChild(seat_type_name);
+            var seat_type_price = document.createElement('input');
+            seat_type_price.type = "number";
+            seat_type_price.placeholder = "Price";
+            seat_type.appendChild(seat_type_price);
+            var seat_type_count = document.createElement('input');
+            seat_type_count.type = "number";
+            seat_type_count.placeholder = "Count";
+            seat_type.appendChild(seat_type_count);
+            var seat_type_toggle = document.createElement("button");
+            seat_type_toggle.innerHTML = "Toggle";
+            seat_type_toggle.id = "button";
+            seat_type.appendChild(seat_type_toggle);
+            seat_type_toggle.onclick = function () {
+                if (seat_type_toggle.classList.contains('active')) {
+                    seat_type_toggle.classList.remove('active');
                 }
                 else {
-                    div.className = "seat";
-                    div.innerHTML = String.fromCharCode(i + 64) + k;
-                    k++;
+                    removeActive();
+                    seat_type_toggle.classList.add('active');
+
+                }
+            }
+            var removeBtn = document.createElement("button");
+            removeBtn.innerHTML = "Remove";
+            removeBtn.id = "removeBtn";
+            seat_type.appendChild(removeBtn);
+            removeBtn.onclick = function () {
+                removeBtn.parentElement.remove();
+            }
+        }
+
+        function myFunction() {
+
+            const container = document.querySelector('#plan');
+            while (container.firstChild) {
+                container.removeChild(container.firstChild);
+            }
+
+
+            var columns = document.getElementById('columns').value;
+            var temp = parseInt(columns) + 2;
+            console.log(temp);
+            var rows = document.getElementById('rows').value;
+            document.getElementById('plan').style.gridTemplateColumns = "repeat(temp, 1fr)";
+            document.getElementById('plan').style.gridTemplateRows = "repeat(rows, 1fr)";
+
+            for (var i = 1; i <= rows; i++) {
+                var k = 1;
+                for (var j = 1; j <= temp; j++) {
+                    var div = document.createElement('div');
+                    document.getElementById('plan').appendChild(div);
+                    div.style.gridRow = i;
+                    div.style.gridColumn = j;
+                    if (j == Math.round(columns / 4 + 1) || j == Math.round(columns * 3 / 4 + 2)) {
+                        div.className = "empty";
+                    }
+                    else {
+                        div.className = "seat";
+                        div.innerHTML = String.fromCharCode(i + 64) + k;
+                        k++;
+                    }
                 }
             }
         }
-    }
 
-</script>
+    </script>
