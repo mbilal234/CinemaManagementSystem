@@ -16,7 +16,7 @@ var mysql = require('mysql');
 var con = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "abdularham123",
+    password: "308NegraAroyoLane",
     database: "cinema",
     insecureAuth: true
 });
@@ -121,9 +121,9 @@ function addScreen(req, res) {
     console.log(req.body.capacity);
     con.query("insert into screens (screen_name, capacity) values (?)", values, (err, result) => {
         if (err){
-            res.render("newScreen.ejs", {message: "Some Problem Ocurred"})
+            res.render("newScreens.ejs", {message: "Some Problem Ocurred"})
         }else{
-            res.render("newScreen.ejs", {message: "New Screen Registred"});
+            res.render("newScreens.ejs", {message: "New Screen Registred"});
         }
     })
 }

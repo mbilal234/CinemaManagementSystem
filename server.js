@@ -27,7 +27,7 @@ var mysql = require('mysql');
 var con = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "abdularham123",
+    password: "308NegraAroyoLane",
     database: "cinema",
     insecureAuth: true
 });
@@ -217,7 +217,7 @@ async function Retrieve_Coming_Soon_Now_Showing(req, res){
     const iterator_CS = CS.length-1;
 
     const NS = await new Promise((resolve) => {
-        con.query("SELECT TMDB_ID, Title, Description, YEAR(Start_Date) AS Year, Trailer_Link, Poster, Backdrop FROM VU_Now_Showing",  (err, reso) => {
+        con.query("SELECT Film_ID, Title, Description, YEAR(Start_Date) AS Year, Trailer_Link, Poster, Backdrop FROM VU_Now_Showing",  (err, reso) => {
             if (err) throw err;
             resolve(reso);
         })
@@ -228,14 +228,14 @@ async function Retrieve_Coming_Soon_Now_Showing(req, res){
 
 async function retrieveFilmDescription(req, res) {
     const result = await new Promise((resolve) => {
-        con.query("SELECT TMDB_ID, Title, Description, Poster, Backdrop, DAYOFWEEK(CURDATE()) AS Day, CURDATE() AS Date FROM films where TMDB_ID = (?)", [req.params.id], (err, reso) => {
+        con.query("SELECT Film_ID, Title, Description, Poster, Backdrop, DAYOFWEEK(CURDATE()) AS Day, CURDATE() AS Date FROM films where Film_ID = (?)", [req.params.id], (err, reso) => {
             if (err) throw err;
             resolve(reso);
         })
     })
     
     const showtimes = await new Promise((resolve) => {
-        con.query("SELECT Show_ID, Show_Date, Start_Time, Show_Type FROM vu_shows where TMDB_ID = (?) AND Show_Date >= CURDATE()", [req.params.id], (err, reso) => {
+        con.query("SELECT Show_ID, Show_Date, Start_Time, Show_Type FROM vu_shows where Film_ID = (?) AND Show_Date >= CURDATE()", [req.params.id], (err, reso) => {
             if (err) throw err;
             resolve(reso);
         })
