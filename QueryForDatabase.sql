@@ -173,6 +173,9 @@ JOIN Screens USING (Screen_ID) JOIN Showtimes USING (Show_ID, Screen_ID)
 JOIN Show_Types USING (Show_Type_ID) 
 JOIN Ticket_Price USING (Seat_Type_ID, Show_Type_ID);
 
+CREATE OR REPLACE VIEW `VU_Shows` AS
+SELECT * FROM showtimes JOIN Show_Types USING (Show_Type_ID);
+
 CREATE OR REPLACE VIEW `VU_Show_Seats` AS
 SELECT seats.Seat_ID, seats.Pos_X, seats.Pos_Y, seats.Seat_Number, seat_types.Seat_Type_ID, res_seats.Res_ID
 FROM Showtimes 

@@ -228,13 +228,22 @@ async function Retrieve_Coming_Soon_Now_Showing(req, res){
 
 async function retrieveFilmDescription(req, res) {
     const result = await new Promise((resolve) => {
-        con.query("SELECT TMDB_ID, Title, Description, Poster, Backdrop, DAYOFWEEK(Start_Date) AS Day FROM films where TMDB_ID = (?)", [req.params.id], (err, reso) => {
+        con.query("SELECT TMDB_ID, Title, Description, Poster, Backdrop, DAYOFWEEK(CURDATE()) AS Day, CURDATE() AS Date FROM films where TMDB_ID = (?)", [req.params.id], (err, reso) => {
+            if (err) throw err;
+            resolve(reso);
+        })
+    })
+    
+    const showtimes = await new Promise((resolve) => {
+        con.query("SELECT Show_ID, Show_Date, Start_Time, Show_Type FROM vu_shows where TMDB_ID = (?) AND Show_Date >= CURDATE()", [req.params.id], (err, reso) => {
             if (err) throw err;
             resolve(reso);
         })
     })
     console.log(result);
-    res.render("filmDescription.ejs", {result});
+    console.log(showtimes);
+
+    res.render("filmDescription.ejs", {result, showtimes});
 }
 
 app.get("/", (req, res) => {

@@ -20,7 +20,7 @@
                 </div>
             </div>
             <!-- <div> -->
-            <img class="blur_back" alt="" src= <%="https://image.tmdb.org/t/p/original" + result[0].Backdrop %> >
+            <img class="blur_back" alt="" src=<%="https://image.tmdb.org/t/p/original" + result[0].Backdrop %> >
             <!-- </div> -->
         </div>
 
@@ -28,43 +28,88 @@
             <div class="labelhead">
                 Showtimes
             </div>
-            
+
             <div class="tabs">
-                <% const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"]; %>
+                <% const weekdays=["Sun", "Mon" , "Tue" , "Wed" , "Thur" , "Fri" , "Sat" ]; %>
                 <% let i = 0; %>
-                <% while(i<7) { %>
-                <span data-tab-value= <%= "#" + weekdays[(result[0].Day + i - 1)%7] %> > <%= weekdays[(result[0].Day + i - 1)%7] %> </span>
+                <% while(i < 7){ %>
+                <div class="tab-pills" data-tab-value=<%="#" + weekdays[(result[0].Day + i - 1)%7] %> > <%=weekdays[(result[0].Day+i-1)%7]%> </div>
                 <% i++;} %>
             </div>
-          
+
             <div class="tab-content">
-                <% let j = 0; %>
+                <% let show2d=[], show3d=[], k=0; %>
+                <% if (showtimes.length !=0) { %>
+                    <% while (k < showtimes.length) { %>
+                        <% if (showtimes[k].Show_Type=="2D" ) { %>
+                            <% show2d.push(showtimes[k]); %>
+                        <% } else { %>
+                            <% show3d.push(showtimes[k]); %>
+                        <% } %>
+                    <% k++; }}%>
+                <% let j=0; %>
                 <% while(j < 7) { %>
-                    <% if (j==0) { %>
-                    <div class="tabs__tab active" data-tab-info id= <%= weekdays[(result[0].Day+j-1)%7] %> >
-                        <p> <%= "Content: " + weekdays[(result[0].Day+j-1)%7] %> </p></div>
-                    <% } else { %>
-                    <div class="tabs__tab" data-tab-info id= <%= weekdays[(result[0].Day+j-1)%7] %> >
-                        <p> <%= "Content: " + weekdays[(result[0].Day+j-1)%7] %> </p></div>
-                <% }j++;} %>
-               
+                    
+                        <div class="tabs__tab" data-tab-info id= <%= weekdays[(result[0].Day+j-1)%7] %> >
+                            <div class="details">
+                                <div class="textRot">2D Shows</div>
+                                <hr width="90%" size="5" align="center">
+                                    <div class="d2">
+                                    <% if (show2d.length !=0) { %>
+                                        <% let s=0; %>
+                                        <% show2d.forEach(element=>{ %>
+                                            var dte = new
+                                            Date(result[0].Show_Date);
+                                            dte.setDate(dte.getDate() + s);
+                                            <% if (element.Show_Date==moment(dte).format('YYYY-MM-DD')) { %>
+                                        <div class="showpill" data-id= <%= element.Show_ID %> > <%= element.Show_Time %> </div>
+                                    <% }s++;})} else { %>
+                                        <%= "No showtimes available" %>
+                                    <% }; %>
+                                    </div>
+                                <hr width="80%" size="5" align="center">
+                                 <div class="textRot">3D Shows</div>
+                                 <hr width="90%" size="5" align="center">
+                                    <div class="d3">
+                                    <% if (show3d.length !=0) { %>
+                                        <% let s=0; %>
+                                        <% show3d.forEach(element=>{ %>
+                                            var dte = new
+                                            Date(result[0].Show_Date);
+                                            dte.setDate(dte.getDate() + s);
+                                            <% if (element.Show_Date==moment(dte).format('YYYY-MM-DD')) { %>
+                                        <div class="showpill"> <%= element.Show_Time %> </div>
+                                    <% }s++;})} else { %>
+                                        <%= "No showtimes available" %>
+                                    <% }; %>
+                                     </div>
+                            </div>
+                        </div>
+                    
+                <% j++;} %>
             </div>
-            <script type="text/javascript">
-                const tabs = document.querySelectorAll('[data-tab-value]')
-                const tabInfos = document.querySelectorAll('[data-tab-info]')
-          
-                tabs.forEach(tab => {
-                    tab.addEventListener('click', () => {
-                        const target = document
-                            .querySelector(tab.dataset.tabValue);
-          
-                        tabInfos.forEach(tabInfo => {
-                            tabInfo.classList.remove('active')
-                        })
-                        target.classList.add('active');
+                
+        </div>
+        <script type="text/javascript">
+            const tabs = document.querySelectorAll('[data-tab-value]')
+            const tabInfos = document.querySelectorAll('[data-tab-info]')
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(tab => {
+                        tab.classList.remove('activepill')
                     })
+                    const target = document.querySelector(tab.dataset.tabValue);
+
+                    tabInfos.forEach(tabInfo => {
+                        tabInfo.classList.remove('active')
+                    })
+                    target.classList.add('active');
+
+                    tab.classList.add('activepill');
                 })
-            </script>
+            })
+        </script>
         </div>
 
 </body>
