@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const { MovieDb } = require('moviedb-promise')
 const dotenv = require("dotenv");
 dotenv.config();
-const moviedb = new MovieDb(process.env.MOVIE_DB)
+const moviedb = new MovieDb("e9f0a1e64e12aa6748cf8b29b8aa9dcb")
 
 // const mailVerification = require("./JS/emailVerify.js");
 const bcrypt = require('bcrypt');
@@ -16,7 +16,7 @@ var mysql = require('mysql');
 var con = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: process.env.DB_PASSWORD,
+    password: "abdularham123",
     database: "cinema",
     insecureAuth: true
 });
@@ -25,8 +25,8 @@ const ticketType = ["2D", "3D"];
 const price = [500, 800];
 const ticketIterator = ticketType.length;
 
-const adminUsername = process.env.ADMIN_USERNAME;
-const adminKey = process.env.ADMIN_KEY;
+const adminUsername = "admin";
+const adminKey = "admin@123";
 
 async function searchMovieResults(req, res) {
     var iterator = 0;
@@ -42,15 +42,22 @@ async function searchMovieResults(req, res) {
 
 async function insertMovie(req, res) {
     var movies = [];
+    var Trailer_Link = "https://www.youtube.com/watch?v=";
     if (req.body.film_id) {
         movies = await moviedb.movieInfo({id: req.body.film_id} );
+        var Trailer_Links = await moviedb.movieVideos({id: req.body.film_id});
+        Trailer_Links.results.forEach(element => {
+            if (element.name.includes("Trailer") && Trailer_Link == "https://www.youtube.com/watch?v=") {
+                Trailer_Link += element.key;
+            }
+        });
     }
 
     if (movies) {
-        var values = [[movies.id, movies.title, movies.overview, "", movies.runtime, movies.vote_average, movies.poster_path, movies.backdrop_path, req.body.start_date, req.body.end_date]];
+        var values = [[movies.id, movies.title, movies.overview, Trailer_Link, movies.runtime, movies.vote_average, movies.poster_path, movies.backdrop_path, req.body.start_date, req.body.end_date]];
         con.query("INSERT INTO films VALUES (?)", values, (err, result) => {
             if (err){  
-                console.error(err);
+                console.error("Already Added to Database");
             }
         })
 
