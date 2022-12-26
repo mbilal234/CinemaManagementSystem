@@ -244,3 +244,29 @@
 	justify-content: center;
 	align-items: center;
 }
+
+.showpill {
+	margin: 5px;
+	background: #3c0164;
+	
+	min-width: 5.5rem;
+	border-radius: 20px;
+	text-align: center;
+	box-shadow: 1px 0px 19px -2px rgba(0,0,0,0.51);
+-webkit-box-shadow: 1px 0px 19px -2px rgba(0,0,0,0.51);
+-moz-box-shadow: 1px 0px 19px -2px rgba(0,0,0,0.51);
+}
+
+.showpill a {
+	color: #ffffff;
+	text-decoration: none;
+}
+
+.showpill:hover a {
+	color: #3c0164;
+}
+
+.showpill:hover {
+	background: #f9efff;
+	cursor: pointer;
+}

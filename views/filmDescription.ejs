@@ -49,21 +49,21 @@
                     <% k++; }}%>
                 <% let j=0; %>
                 <% while(j < 7) { %>
-                    
                         <div class="tabs__tab" data-tab-info id= <%= weekdays[(result[0].Day+j-1)%7] %> >
                             <div class="details">
                                 <div class="textRot">2D Shows</div>
                                 <hr width="90%" size="5" align="center">
                                     <div class="d2">
+                                    <% let s=0; %>
+                                        <% var dte = new Date(result[0].Date); %>
+                                        <% dte.setDate(dte.getDate() + j); %>
                                     <% if (show2d.length !=0) { %>
-                                        <% let s=0; %>
                                         <% show2d.forEach(element=>{ %>
-                                            var dte = new
-                                            Date(result[0].Show_Date);
-                                            dte.setDate(dte.getDate() + s);
-                                            <% if (element.Show_Date==moment(dte).format('YYYY-MM-DD')) { %>
-                                        <div class="showpill" data-id= <%= element.Show_ID %> > <%= element.Show_Time %> </div>
-                                    <% }s++;})} else { %>
+                                        
+                                            <% if (element.Show_Date.getTime() == dte.getTime()) { %>
+                                        <div class="showpill" data-id= <%= element.Show_ID %> > <a href=""> <%= element.Start_Time %> </a></div>
+                                    <% s++;}})} %>
+                                    <% if (s==0) { %>
                                         <%= "No showtimes available" %>
                                     <% }; %>
                                     </div>
@@ -71,15 +71,16 @@
                                  <div class="textRot">3D Shows</div>
                                  <hr width="90%" size="5" align="center">
                                     <div class="d3">
+                                        <% let t=0; %>
+                                        <% var dte = new Date(result[0].Date); %>
+                                        <% dte.setDate(dte.getDate() + j); %>
                                     <% if (show3d.length !=0) { %>
-                                        <% let s=0; %>
                                         <% show3d.forEach(element=>{ %>
-                                            var dte = new
-                                            Date(result[0].Show_Date);
-                                            dte.setDate(dte.getDate() + s);
-                                            <% if (element.Show_Date==moment(dte).format('YYYY-MM-DD')) { %>
-                                        <div class="showpill"> <%= element.Show_Time %> </div>
-                                    <% }s++;})} else { %>
+                                        
+                                            <% if (element.Show_Date.getTime() == dte.getTime()) { %>
+                                        <div class="showpill" data-id= <%= element.Show_ID %> > <%= element.Start_Time %> </div>
+                                    <% t++;}})} %>
+                                    <% if (t==0) { %>
                                         <%= "No showtimes available" %>
                                     <% }; %>
                                      </div>
