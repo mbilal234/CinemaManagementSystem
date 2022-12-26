@@ -10,15 +10,19 @@
                     <h1><a href=<%="/viewFilm/" + result[0].Film_ID %> data-id= <%= "" + result[0].Film_ID %>>
                                 <%= "" + result[0].Title %>
                         </a></h1>
-                    <!-- <span class="minutes"> <%= "" + result[0].Run_Time %> </span> -->
-                    <!-- <p class="type"> </p>  -->
+                    <span class="minutes"> <%= parseInt(parseInt(result[0].Run_Time)/60) + " hr " + parseInt(result[0].Run_Time)%60 + " min " %>  </span>
+                    <% genres.forEach(element => { %>
+                        <p class="type"> <%= element.Genre %> </p> 
+                    <% }) %>
                 </div>
+                
                 <div class="movie_desc">
                     <p class="text">
                         <%= "" + result[0].Description %>
                     </p>
                 </div>
             </div>
+            
             <!-- <div> -->
             <img class="blur_back" alt="" src=<%="https://image.tmdb.org/t/p/original" + result[0].Backdrop %> >
             <!-- </div> -->
@@ -59,9 +63,8 @@
                                         <% dte.setDate(dte.getDate() + j); %>
                                     <% if (show2d.length !=0) { %>
                                         <% show2d.forEach(element=>{ %>
-                                        
                                             <% if (element.Show_Date.getTime() == dte.getTime()) { %>
-                                        <div class="showpill" data-id= <%= element.Show_ID %> > <a href=""> <%= element.Start_Time %> </a></div>
+                                        <div class="showpill" data-id= <%= element.Show_ID %> > <a href= <%="/seatPlan/"+element.Show_ID%> > <%= element.Start_Time %> </a></div>
                                     <% s++;}})} %>
                                     <% if (s==0) { %>
                                         <%= "No showtimes available" %>

@@ -228,7 +228,15 @@ async function Retrieve_Coming_Soon_Now_Showing(req, res){
 
 async function retrieveFilmDescription(req, res) {
     const result = await new Promise((resolve) => {
-        con.query("SELECT Film_ID, Title, Description, Poster, Backdrop, DAYOFWEEK(CURDATE()) AS Day, CURDATE() AS Date FROM films where Film_ID = (?)", [req.params.id], (err, reso) => {
+        con.query("SELECT Film_ID, Title, Description, Trailer_Link, Run_Time, Rating, Poster, Backdrop, DAYOFWEEK(CURDATE()) AS Day, CURDATE() AS Date FROM films where Film_ID = (?)", [req.params.id], (err, reso) => {
+            if (err) throw err;
+            resolve(reso);
+        })
+    })
+
+    const genres = await new Promise((resolve) => {
+        con.query("SELECT Genre FROM genres where Film_ID = (?)", [req.params.id], (err, reso) => {
+        
             if (err) throw err;
             resolve(reso);
         })
@@ -240,10 +248,35 @@ async function retrieveFilmDescription(req, res) {
             resolve(reso);
         })
     })
-    console.log(result);
-    console.log(showtimes);
+    console.log(genres);
 
-    res.render("filmDescription.ejs", {result, showtimes});
+    res.render("filmDescription.ejs", {result, genres, showtimes});
+}
+async function retrieveSeats(req, res) {
+    const result = await new Promise((resolve) => {
+        con.query("SELECT Film_ID, Title, Description, Trailer_Link, Run_Time, Rating, Poster, Backdrop, DAYOFWEEK(CURDATE()) AS Day, CURDATE() AS Date FROM films where Film_ID = (?)", [req.params.id], (err, reso) => {
+            if (err) throw err;
+            resolve(reso);
+        })
+    })
+
+    const genres = await new Promise((resolve) => {
+        con.query("SELECT Genre FROM genres where Film_ID = (?)", [req.params.id], (err, reso) => {
+        
+            if (err) throw err;
+            resolve(reso);
+        })
+    })
+    
+    const showtimes = await new Promise((resolve) => {
+        con.query("SELECT Show_ID, Show_Date, Start_Time, Show_Type FROM vu_shows where Film_ID = (?) AND Show_Date >= CURDATE()", [req.params.id], (err, reso) => {
+            if (err) throw err;
+            resolve(reso);
+        })
+    })
+    console.log(genres);
+
+    res.render("filmDescription.ejs", {result, genres, showtimes});
 }
 
 app.get("/", (req, res) => {
@@ -274,18 +307,16 @@ app.get("/viewFilm/:id", (req, res) => {
     retrieveFilmDescription(req, res);
 })
 
+app.get("/seatPlan/:showID", (req, res) => {
+    retrieveSeats(req, res);
+})
+
 app.post("/seeMore", (req, res) => {
     openSeeMore(req.body.someName, res);
 })
 
 app.post("/signup", (req, res) => {
     retrieveUser(req, res);
-})
-
-app.post("/filmInsert", (req, res) => {
-    console.log(req.body);
-    insertFilm(req.body.filmName, req.body.genre, req.body.desc, req.body.runTime, req.body.rating, req.body.imgUrl, req.body.startDate, req.body.endDate);
-    res.redirect("/");
 })
 
 app.post("/verify", (req, res) => {
