@@ -177,10 +177,16 @@ CREATE OR REPLACE VIEW `VU_Shows` AS
 SELECT * FROM showtimes JOIN Show_Types USING (Show_Type_ID);
 
 CREATE OR REPLACE VIEW `VU_Show_Seats` AS
-SELECT seats.Seat_ID, seats.Pos_X, seats.Pos_Y, seats.Seat_Number, seat_types.Seat_Type_ID, res_seats.Res_ID
+SELECT Showtimes.Show_ID, seats.Seat_ID, seats.Pos_X, seats.Pos_Y, seats.Seat_Number, seat_types.Seat_Type_ID, res_seats.Res_ID
 FROM Showtimes 
 JOIN Screens USING (Screen_ID) 
 JOIN Show_Types USING (Show_Type_ID) 
 JOIN Seats USING (Screen_ID)
 JOIN Seat_Types USING (Seat_Type_ID) 
 LEFT JOIN Res_Seats USING (Seat_ID);
+
+CREATE OR REPLACE VIEW `VU_ShowSeats` AS
+SELECT * FROM Showtimes JOIN Screens USING (Screen_ID) JOIN Seats USING (Screen_ID);
+
+CREATE OR REPLACE VIEW `VU_ReservedSeats` AS 
+SELECT * FROM Showtimes JOIN Reservations USING (Show_ID) JOIN Res_Seats USING (Res_ID) JOIN Seats USING (Seat_ID, Screen_ID);

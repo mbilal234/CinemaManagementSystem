@@ -13,7 +13,7 @@
       </div>
       <button class="btn btn-primary">Submit</button>
     </form>
-    <table>
+    <table class="table">
       <thead>
         <th>ID</th>
         <th>Name</th>
@@ -25,7 +25,7 @@
       </thead>
       <tbody>
         <% let i=0 %>
-        <% while (i <= iterator){ %>
+        <% while (i <= iterator && result[i]){ %>
           <tr id="<% result[iterator].Emp_ID %>">
             <td>
              <%= result[i].Emp_ID %>

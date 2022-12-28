@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-<link rel="stylesheet" href="newScreens.ejs">
+<link rel="stylesheet" href="../CSS/newScreens.css">
 <%- include('partials/navbar') %>
 
 
@@ -14,22 +14,19 @@
                 Screen Name
                 <input type="text" name="screenName" id="screenName" class="form-control" required>
             </label>
-            <label for="capacity" class="d-block">
-                Capacity
-                <input type="number" min="30" max="100" name="capacity" id="capacity" class="form-control" required>
-            </label>
             <label for="rows" class="d-block">
                 Rows
                 <input type="number" name="rows" id="rows" class="form-control">
             </label>
             <label for="columns" class="d-block">
                 Columns
-                <input type="number" name="rows" id="columns" class="form-control">
+                <input type="number" name="columns" id="columns" class="form-control">
             </label>
-            <div id="seat_container" class="form-group">
-                <span onclick="addSeatType()" class="btn btn-secondary">Add Seat type</span>
+            <div>
+                <span onclick="myFunction()" class="btn btn-secondary">Show Layout</span>
             </div>
-            <button onclick="myFunction()" class="btn btn-primary mt-3">Submit</button>
+
+            <button class="btn btn-primary mt-3">Submit</button>
         </form>
 
         <div id="plan" class="seating mt-5">

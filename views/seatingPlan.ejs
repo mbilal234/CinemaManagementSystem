@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .seating {
+            display: grid;
+            justify-content: center;
+            grid-gap: 5px;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #000;
+            border-radius: 5px;
+            width: 100%;
+            height: 100%;
+            margin: 0 auto;
+            max-width: 1000px;
+            max-height: 1000px;
+
+        }
+
+        .seat {
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            background-color: #6feaf6;
+            justify-content: center;
+        }
+
+        .empty {
+            background-color: #ffffff;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            min-width: 12px;
+            justify-content: center;
+        }
+
+        .active {
+            background: #0d0f10;
+        }
+    </style>
+</head>
+
+<body>
+    <%- include('partials/navbar') %>
+        <script>document.getElementById("home").className = "nav-link"</script>
+        <script>document.getElementById("about").className = "nav-link active"</script>
+        <script>document.getElementById("contact").className = "nav-link"</script>
+        <script>document.getElementById("signin").className = "nav-link"</script>
+
+        <div id="plan" class="seating">
+            <% for (var i=1; i <=10; i++) { %>
+            <% var k=1; %>
+            <% for (var j=1; j <=22; j++) { %> %>
+                
+                
+                <% if (j==Math.round(22 / 4 + 1) || j==Math.round(22 * 3 / 4 + 2)) { %>
+                    <div class="empty">
+
+                    </div>
+                <% } else { %>
+                    <div class="seat">
+                        <% String.fromCharCode(i + 64) + k; %>
+                    </div>
+                    
+                    <% k++; %>
+                <% } %>
+            <% } %>
+        <% } %>
+        </div>
+</body>
+
+</html>

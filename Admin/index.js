@@ -82,14 +82,7 @@ async function retrieveFilm(film_id) {
             resolve(res);
         })
     })
-    const imageUrl = await new Promise((resolve) => {
-        con.query("SELECT convert(cover_img using utf8) FROM films where Film_ID = (?)", [film_id], (err, res) => {
-            if (err) throw err;
-            resolve(res)
-        })
-    })
-    // console.log(imageUrl);
-    result[0].Cover_Img = "http://localhost:5000/images/" + imageUrl[0]["convert(cover_img using utf8)"];
+    
     return result;
 }
 
@@ -116,12 +109,12 @@ async function openSeeMore(film_id, res) {
 }
 
 function addScreen(req, res) {
-    var values = [[req.body.screenName, req.body.capacity]];
-    console.log(req.body.screenName);
-    console.log(req.body.capacity);
+    var values = [[req.body.screenName, req.body.rows * req.body.columns]];
+
     con.query("insert into screens (screen_name, capacity) values (?)", values, (err, result) => {
         if (err){
-            res.render("newScreens.ejs", {message: "Some Problem Ocurred"})
+            console.error(err);
+            res.render("newScreens.ejs", {message: "Some Problem Occurred"})
         }else{
             res.render("newScreens.ejs", {message: "New Screen Registred"});
         }
@@ -187,6 +180,7 @@ async function insertPrices(req, res) {
             resolve(res);
         })
     })
+    iterator = result.length;
     if (result.length === 0) {
         return res.render("prices.ejs", { ticketType, price, iterator, message:"No Ticket Present with this seat or show type"});
     }
@@ -314,6 +308,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get("/", (req, res) => {
     res.render("adminLogin.ejs", {message:""});
+})
+
+app.get("/home", (req, res) => {
+    res.render("index.ejs", {message:""});
 })
 
 app.post("/login", (req, res) => {

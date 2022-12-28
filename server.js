@@ -253,30 +253,23 @@ async function retrieveFilmDescription(req, res) {
     res.render("filmDescription.ejs", {result, genres, showtimes});
 }
 async function retrieveSeats(req, res) {
-    const result = await new Promise((resolve) => {
-        con.query("SELECT Film_ID, Title, Description, Trailer_Link, Run_Time, Rating, Poster, Backdrop, DAYOFWEEK(CURDATE()) AS Day, CURDATE() AS Date FROM films where Film_ID = (?)", [req.params.id], (err, reso) => {
+    const seats = await new Promise((resolve) => {
+        con.query("SELECT * FROM VU_ShowSeats WHERE Show_ID = (?)", [req.params.showID], (err, reso) => {
             if (err) throw err;
             resolve(reso);
         })
     })
 
-    const genres = await new Promise((resolve) => {
-        con.query("SELECT Genre FROM genres where Film_ID = (?)", [req.params.id], (err, reso) => {
-        
+    const reserved = await new Promise((resolve) => {
+        con.query("SELECT * FROM VU_ReservedSeats WHERE Show_ID = (?)", [req.params.showID], (err, reso) => {
             if (err) throw err;
             resolve(reso);
         })
     })
     
-    const showtimes = await new Promise((resolve) => {
-        con.query("SELECT Show_ID, Show_Date, Start_Time, Show_Type FROM vu_shows where Film_ID = (?) AND Show_Date >= CURDATE()", [req.params.id], (err, reso) => {
-            if (err) throw err;
-            resolve(reso);
-        })
-    })
-    console.log(genres);
+    
 
-    res.render("filmDescription.ejs", {result, genres, showtimes});
+    res.render("seatingPlan.ejs", {seats, reserved});
 }
 
 app.get("/", (req, res) => {

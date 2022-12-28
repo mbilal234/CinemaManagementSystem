@@ -81,7 +81,7 @@
                                         <% show3d.forEach(element=>{ %>
                                         
                                             <% if (element.Show_Date.getTime() == dte.getTime()) { %>
-                                        <div class="showpill" data-id= <%= element.Show_ID %> > <%= element.Start_Time %> </div>
+                                        <div class="showpill" data-id= <%= element.Show_ID %> > <a href= <%="/seatPlan/"+element.Show_ID%> > <%= element.Start_Time %> </div>
                                     <% t++;}})} %>
                                     <% if (t==0) { %>
                                         <%= "No showtimes available" %>
